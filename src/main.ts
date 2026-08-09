@@ -70,7 +70,7 @@ export default class ViewModeLockPlugin extends Plugin {
 				mobile: this.normalizeDevicePolicy(stored?.devicePolicies?.mobile)
 			},
 			overrideProperty: stored?.overrideProperty?.trim() || DEFAULT_SETTINGS.overrideProperty,
-			noteUpdatedPropertyName: !stored?.noteUpdatedPropertyName?.trim() || stored.noteUpdatedPropertyName.trim() === "更新时间"
+			noteUpdatedPropertyName: !stored?.noteUpdatedPropertyName?.trim() || stored.noteUpdatedPropertyName.trim() === "最后更新时间"
 				? DEFAULT_SETTINGS.noteUpdatedPropertyName
 				: stored.noteUpdatedPropertyName.trim(),
 			rules: Array.isArray(stored?.rules) ? stored.rules.filter(this.isValidRule).map((rule) => ({

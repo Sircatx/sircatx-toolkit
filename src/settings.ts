@@ -59,7 +59,7 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 	rules: [],
 	copyInlineCodeEnabled: true,
 	noteUpdatedPropertyEnabled: true,
-	noteUpdatedPropertyName: "最后更新时间",
+	noteUpdatedPropertyName: "更新时间",
 	addUpdatedPropertyToNewNotes: true
 };
 
