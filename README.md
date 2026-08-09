@@ -1,4 +1,4 @@
-# Sircatx 工具箱
+# Sircatx Toolkit
 
 一款原生中文、可持续扩展的 Obsidian 工具箱。
 
@@ -13,7 +13,7 @@
 
 ## 使用方法
 
-安装并启用插件后，打开 **设置 → Sircatx 工具箱**。
+安装并启用插件后，打开 **设置 → Sircatx Toolkit**。
 
 设备行为优先级最高，每种设备可以选择：
 
@@ -50,7 +50,7 @@
 - `manifest.json`
 - `styles.css`
 
-重新加载 Obsidian 后，在第三方插件列表中启用“Sircatx 工具箱”。请勿同时启用功能重复的独立插件。
+重新加载 Obsidian 后，在第三方插件列表中启用“Sircatx Toolkit”。请勿同时启用功能重复的独立插件。
 
 ## 开发
 
