@@ -1,24 +1,22 @@
-import { MarkdownView, TFile, type EventRef } from "obsidian";
+import { MarkdownView, TFile } from "obsidian";
 import type ViewModeLockPlugin from "./main";
 
 const UPDATE_DELAY_MS = 30_000;
 
 export class NoteUpdatedPropertyManager {
-	private modifyEvent: EventRef | null = null;
 	private readonly timers = new Map<string, number>();
 	private readonly writing = new Set<string>();
 
 	constructor(private readonly plugin: ViewModeLockPlugin) {}
 
 	register(): void {
-		this.modifyEvent = this.plugin.app.vault.on("modify", (file) => {
+		this.plugin.registerEvent(this.plugin.app.workspace.on("editor-change", (_editor, info) => {
+			const file = info.file;
 			if (!(file instanceof TFile) || file.extension !== "md") return;
 			if (!this.plugin.settings.noteUpdatedPropertyEnabled) return;
-			const activeFile = this.plugin.app.workspace.getActiveViewOfType(MarkdownView)?.file;
-			if (activeFile?.path !== file.path || this.writing.has(file.path)) return;
+			if (this.writing.has(file.path)) return;
 			this.schedule(file);
-		});
-		this.plugin.registerEvent(this.modifyEvent);
+		}));
 		this.plugin.register(() => this.clear());
 	}
 
