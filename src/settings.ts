@@ -18,6 +18,10 @@ export interface ViewModeLockSettings {
 	rules: LockRule[];
 	/** Copies inline code when it is clicked in a Markdown view. */
 	copyInlineCodeEnabled: boolean;
+	/** Maintains a last-updated property after the user stops editing. */
+	noteUpdatedPropertyEnabled: boolean;
+	/** Frontmatter property used for the last-updated timestamp. */
+	noteUpdatedPropertyName: string;
 }
 
 export type LockRuleKind = "folder" | "tag" | "property";
@@ -51,7 +55,9 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 	},
 	overrideProperty: "阅读模式锁定",
 	rules: [],
-	copyInlineCodeEnabled: true
+	copyInlineCodeEnabled: true,
+	noteUpdatedPropertyEnabled: true,
+	noteUpdatedPropertyName: "更新时间"
 };
 
 class ValueSuggest extends AbstractInputSuggest<string> {
@@ -133,6 +139,36 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 								await this.plugin.saveSettings();
 							})
 						);
+					}
+				}]
+			},
+			{
+				type: "group",
+				heading: translations.noteUpdatedHeading,
+				cls: "sircatx-toolkit-module-group",
+				items: [{
+					name: translations.noteUpdatedEnabled,
+					desc: translations.noteUpdatedEnabledDesc,
+					render: (setting) => {
+						setting.addToggle((toggle) => toggle
+							.setValue(this.plugin.settings.noteUpdatedPropertyEnabled)
+							.onChange(async (value) => {
+								this.plugin.settings.noteUpdatedPropertyEnabled = value;
+								await this.plugin.saveSettings();
+								this.plugin.noteUpdatedProperty.refresh();
+							}));
+					}
+				}, {
+					name: translations.noteUpdatedPropertyName,
+					desc: translations.noteUpdatedPropertyNameDesc,
+					render: (setting) => {
+						setting.addText((text) => text
+							.setPlaceholder(DEFAULT_SETTINGS.noteUpdatedPropertyName)
+							.setValue(this.plugin.settings.noteUpdatedPropertyName)
+							.onChange(async (value) => {
+								this.plugin.settings.noteUpdatedPropertyName = value.trim() || DEFAULT_SETTINGS.noteUpdatedPropertyName;
+								await this.plugin.saveSettings();
+							}));
 					}
 				}]
 			},

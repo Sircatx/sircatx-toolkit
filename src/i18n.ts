@@ -44,6 +44,11 @@ export interface Translations {
 	copyInlineCodeName: string;
 	copyInlineCodeDesc: string;
 	inlineCodeCopied: string;
+	noteUpdatedHeading: string;
+	noteUpdatedEnabled: string;
+	noteUpdatedEnabledDesc: string;
+	noteUpdatedPropertyName: string;
+	noteUpdatedPropertyNameDesc: string;
 }
 
 const EN: Translations = {
@@ -89,7 +94,12 @@ const EN: Translations = {
 	copyInlineCodeHeading: "Inline code",
 	copyInlineCodeName: "Click to copy inline code",
 	copyInlineCodeDesc: "Show a 📋 icon after inline code in Reading view and Live Preview. Click it to copy; code blocks are not affected.",
-	inlineCodeCopied: "Copied: "
+	inlineCodeCopied: "Copied: ",
+	noteUpdatedHeading: "Note updated time",
+	noteUpdatedEnabled: "Maintain updated-time property",
+	noteUpdatedEnabledDesc: "Write the current time after editing stops for 30 seconds.",
+	noteUpdatedPropertyName: "Property name",
+	noteUpdatedPropertyNameDesc: "Default: 更新时间. The value uses YYYY-MM-DD HH:mm."
 };
 
 const KO: Translations = {
@@ -135,7 +145,12 @@ const KO: Translations = {
 	copyInlineCodeHeading: "인라인 코드",
 	copyInlineCodeName: "클릭하여 인라인 코드 복사",
 	copyInlineCodeDesc: "읽기 모드와 라이브 프리뷰의 인라인 코드 뒤에 📋 아이콘을 표시합니다. 아이콘을 클릭하면 복사되며 코드 블록은 제외됩니다.",
-	inlineCodeCopied: "복사됨: "
+	inlineCodeCopied: "복사됨: ",
+	noteUpdatedHeading: "노트 수정 시간",
+	noteUpdatedEnabled: "수정 시간 속성 유지",
+	noteUpdatedEnabledDesc: "편집을 멈춘 뒤 30초 후 현재 시간을 기록합니다.",
+	noteUpdatedPropertyName: "속성 이름",
+	noteUpdatedPropertyNameDesc: "기본값: 更新时间. 값 형식은 YYYY-MM-DD HH:mm입니다."
 };
 
 const ZH_CN: Translations = {
@@ -181,7 +196,12 @@ const ZH_CN: Translations = {
 	copyInlineCodeHeading: "行内代码",
 	copyInlineCodeName: "点击复制行内代码",
 	copyInlineCodeDesc: "在阅读视图和实时预览的行内代码后显示 📋 图标；点击图标即可复制，代码块不受影响。",
-	inlineCodeCopied: "已复制："
+	inlineCodeCopied: "已复制：",
+	noteUpdatedHeading: "笔记更新时间",
+	noteUpdatedEnabled: "自动维护更新时间属性",
+	noteUpdatedEnabledDesc: "停止编辑 30 秒后，将当前时间写入笔记属性。",
+	noteUpdatedPropertyName: "属性名称",
+	noteUpdatedPropertyNameDesc: "默认属性名：更新时间。时间格式为 YYYY-MM-DD HH:mm。"
 };
 
 export function getTranslations(): Translations {

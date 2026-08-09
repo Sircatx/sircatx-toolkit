@@ -1,6 +1,7 @@
 import { getAllTags, MarkdownView, Notice, Platform, Plugin, TFile, type CachedMetadata } from "obsidian";
 import { getTranslations } from "./i18n";
 import { registerCopyInlineCode } from "./copy-inline-code";
+import { NoteUpdatedPropertyManager } from "./note-updated-property";
 import {
 	DEFAULT_SETTINGS,
 	type DeviceKind,
@@ -15,6 +16,7 @@ type LockDecision = ViewModeLockMode | "none";
 
 export default class ViewModeLockPlugin extends Plugin {
 	settings: ViewModeLockSettings = DEFAULT_SETTINGS;
+	readonly noteUpdatedProperty = new NoteUpdatedPropertyManager(this);
 	private enforceQueued = false;
 	private readonly metadataSuggestions = new Map<string, CachedMetadata>();
 	private suggestionIndexReady = false;
@@ -23,6 +25,7 @@ export default class ViewModeLockPlugin extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new ViewModeLockSettingTab(this.app, this));
 		registerCopyInlineCode(this);
+		this.noteUpdatedProperty.register();
 		const translations = getTranslations();
 
 		this.addCommand({
@@ -67,6 +70,7 @@ export default class ViewModeLockPlugin extends Plugin {
 				mobile: this.normalizeDevicePolicy(stored?.devicePolicies?.mobile)
 			},
 			overrideProperty: stored?.overrideProperty?.trim() || DEFAULT_SETTINGS.overrideProperty,
+			noteUpdatedPropertyName: stored?.noteUpdatedPropertyName?.trim() || DEFAULT_SETTINGS.noteUpdatedPropertyName,
 			rules: Array.isArray(stored?.rules) ? stored.rules.filter(this.isValidRule).map((rule) => ({
 				...rule,
 				mode: rule.mode ?? "reading"

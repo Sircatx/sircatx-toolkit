@@ -1,9 +1,9 @@
 {
   "id": "sircatx-toolkit",
   "name": "Sircatx Toolkit",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "minAppVersion": "1.13.0",
-  "description": "A modular toolkit for locking note reading modes and copying inline code.",
+  "description": "A modular toolkit for note reading modes, inline code copying, and updated-time properties.",
   "author": "Sircatx",
   "isDesktopOnly": false
 }

@@ -19,6 +19,13 @@ A modular toolkit that combines small, independently configurable note enhanceme
 - Enables Reading view lock for an individual note with a configurable property.
 - Suggests existing folders, tags, properties, and property values while editing rules.
 
+### Note updated time
+
+- Maintains an `更新时间` property for the active Markdown note.
+- Writes the local time 30 seconds after editing stops.
+- Uses the `YYYY-MM-DD HH:mm` format without scanning the vault.
+- Can be disabled and the property name can be changed in settings.
+
 ## Usage
 
 Open **Settings → Sircatx Toolkit** after installing and enabling the plugin.
@@ -72,5 +79,6 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 - 按文件夹、标签或属性值建立锁定规则。
 - 使用 `阅读模式锁定: 是` 或 `阅读模式锁定: reading` 为单篇笔记启用阅读模式锁定。
 - 输入规则时自动提示现有文件夹、标签、属性及属性值。
+- 停止编辑 30 秒后，自动维护当前笔记的 `更新时间` 属性，格式为 `YYYY-MM-DD HH:mm`。
 
 安装后打开 **设置 → Sircatx Toolkit** 进行配置。请勿同时启用功能重复的独立插件。
