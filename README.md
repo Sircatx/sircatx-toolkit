@@ -23,6 +23,7 @@ A modular toolkit that combines small, independently configurable note enhanceme
 
 - Maintains an `更新时间` property for the active Markdown note.
 - Adds the property automatically when a Markdown note is created, with a setting to disable this behavior.
+- Can make the managed value read-only in the Properties UI while still allowing source-mode YAML editing.
 - Writes the local time 30 seconds after editing stops.
 - Uses the `YYYY-MM-DD HH:mm` format without scanning the vault.
 - Can be disabled and the property name can be changed in settings.
@@ -82,5 +83,6 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 - 输入规则时自动提示现有文件夹、标签、属性及属性值。
 - 停止编辑 30 秒后，自动维护当前笔记的 `更新时间` 属性，格式为 `YYYY-MM-DD HH:mm`。
 - 新建 Markdown 笔记时自动添加该属性，可在设置中关闭。
+- 可禁止在笔记属性界面中手动修改更新时间；源码模式仍可编辑 YAML。
 
 安装后打开 **设置 → Sircatx Toolkit** 进行配置。请勿同时启用功能重复的独立插件。

@@ -51,6 +51,8 @@ export interface Translations {
 	noteUpdatedPropertyNameDesc: string;
 	noteUpdatedNewNotes: string;
 	noteUpdatedNewNotesDesc: string;
+	noteUpdatedReadonly: string;
+	noteUpdatedReadonlyDesc: string;
 }
 
 const EN: Translations = {
@@ -103,7 +105,9 @@ const EN: Translations = {
 	noteUpdatedPropertyName: "Property name",
 	noteUpdatedPropertyNameDesc: "Default: 更新时间. The value uses YYYY-MM-DD HH:mm.",
 	noteUpdatedNewNotes: "Add to new notes",
-	noteUpdatedNewNotesDesc: "Automatically add the updated-time property when a Markdown note is created."
+	noteUpdatedNewNotesDesc: "Automatically add the updated-time property when a Markdown note is created.",
+	noteUpdatedReadonly: "Prevent manual editing",
+	noteUpdatedReadonlyDesc: "Make the managed value read-only in the Properties UI. Source mode can still edit YAML."
 };
 
 const KO: Translations = {
@@ -156,7 +160,9 @@ const KO: Translations = {
 	noteUpdatedPropertyName: "속성 이름",
 	noteUpdatedPropertyNameDesc: "기본값: 更新时间. 값 형식은 YYYY-MM-DD HH:mm입니다.",
 	noteUpdatedNewNotes: "새 노트에 추가",
-	noteUpdatedNewNotesDesc: "Markdown 노트를 만들 때 수정 시간 속성을 자동으로 추가합니다."
+	noteUpdatedNewNotesDesc: "Markdown 노트를 만들 때 수정 시간 속성을 자동으로 추가합니다.",
+	noteUpdatedReadonly: "수동 편집 방지",
+	noteUpdatedReadonlyDesc: "속성 UI에서 관리되는 값을 읽기 전용으로 설정합니다. 소스 모드에서는 YAML을 계속 편집할 수 있습니다."
 };
 
 const ZH_CN: Translations = {
@@ -209,7 +215,9 @@ const ZH_CN: Translations = {
 	noteUpdatedPropertyName: "属性名称",
 	noteUpdatedPropertyNameDesc: "默认属性名：更新时间。时间格式为 YYYY-MM-DD HH:mm。",
 	noteUpdatedNewNotes: "新建笔记时添加属性",
-	noteUpdatedNewNotesDesc: "新建 Markdown 笔记时，自动添加更新时间属性。"
+	noteUpdatedNewNotesDesc: "新建 Markdown 笔记时，自动添加更新时间属性。",
+	noteUpdatedReadonly: "禁止手动修改",
+	noteUpdatedReadonlyDesc: "在笔记属性界面中将更新时间设为只读；源码模式仍可直接修改 YAML。"
 };
 
 export function getTranslations(): Translations {

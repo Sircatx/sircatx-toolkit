@@ -24,6 +24,8 @@ export interface ViewModeLockSettings {
 	noteUpdatedPropertyName: string;
 	/** Adds the updated-time property when a Markdown note is created. */
 	addUpdatedPropertyToNewNotes: boolean;
+	/** Prevents editing the managed property through the Properties UI. */
+	noteUpdatedPropertyReadonly: boolean;
 }
 
 export type LockRuleKind = "folder" | "tag" | "property";
@@ -60,7 +62,8 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 	copyInlineCodeEnabled: true,
 	noteUpdatedPropertyEnabled: true,
 	noteUpdatedPropertyName: "更新时间",
-	addUpdatedPropertyToNewNotes: true
+	addUpdatedPropertyToNewNotes: true,
+	noteUpdatedPropertyReadonly: true
 };
 
 class ValueSuggest extends AbstractInputSuggest<string> {
@@ -173,6 +176,18 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 							}));
 					}
 				}, {
+					name: translations.noteUpdatedReadonly,
+					desc: translations.noteUpdatedReadonlyDesc,
+					render: (setting) => {
+						setting.addToggle((toggle) => toggle
+							.setValue(this.plugin.settings.noteUpdatedPropertyReadonly)
+							.onChange(async (value) => {
+								this.plugin.settings.noteUpdatedPropertyReadonly = value;
+								await this.plugin.saveSettings();
+								this.plugin.updatedPropertyReadonly.refresh();
+							}));
+					}
+				}, {
 					name: translations.noteUpdatedPropertyName,
 					desc: translations.noteUpdatedPropertyNameDesc,
 					render: (setting) => {
@@ -182,6 +197,7 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 							.onChange(async (value) => {
 								this.plugin.settings.noteUpdatedPropertyName = value.trim() || DEFAULT_SETTINGS.noteUpdatedPropertyName;
 								await this.plugin.saveSettings();
+								this.plugin.updatedPropertyReadonly.refresh();
 							}));
 					}
 				}]

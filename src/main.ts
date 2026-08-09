@@ -2,6 +2,7 @@ import { getAllTags, MarkdownView, Notice, Platform, Plugin, TFile, type CachedM
 import { getTranslations } from "./i18n";
 import { registerCopyInlineCode } from "./copy-inline-code";
 import { NoteUpdatedPropertyManager } from "./note-updated-property";
+import { UpdatedPropertyReadonlyManager } from "./updated-property-readonly";
 import {
 	DEFAULT_SETTINGS,
 	type DeviceKind,
@@ -17,6 +18,7 @@ type LockDecision = ViewModeLockMode | "none";
 export default class ViewModeLockPlugin extends Plugin {
 	settings: ViewModeLockSettings = DEFAULT_SETTINGS;
 	readonly noteUpdatedProperty = new NoteUpdatedPropertyManager(this);
+	readonly updatedPropertyReadonly = new UpdatedPropertyReadonlyManager(this);
 	private enforceQueued = false;
 	private readonly metadataSuggestions = new Map<string, CachedMetadata>();
 	private suggestionIndexReady = false;
@@ -26,6 +28,7 @@ export default class ViewModeLockPlugin extends Plugin {
 		this.addSettingTab(new ViewModeLockSettingTab(this.app, this));
 		registerCopyInlineCode(this);
 		this.noteUpdatedProperty.register();
+		this.updatedPropertyReadonly.register();
 		const translations = getTranslations();
 
 		this.addCommand({

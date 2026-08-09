@@ -39,6 +39,18 @@
 	margin-left: 0.25em;
 }
 
+.sircatx-toolkit-readonly-updated-property .metadata-property-value {
+	pointer-events: none;
+	opacity: 0.72;
+	cursor: default;
+}
+
+.sircatx-toolkit-readonly-updated-property .metadata-property-value input,
+.sircatx-toolkit-readonly-updated-property .metadata-property-value textarea,
+.sircatx-toolkit-readonly-updated-property .metadata-property-value [contenteditable] {
+	caret-color: transparent;
+}
+
 
 .view-mode-lock-rule-card {
 	flex-wrap: wrap;
