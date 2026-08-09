@@ -1,0 +1,9 @@
+{
+  "id": "sircatx-toolkit",
+  "name": "Sircatx 工具箱",
+  "version": "1.0.0",
+  "minAppVersion": "1.13.0",
+  "description": "提供阅读模式锁定、行内代码复制等可独立配置的 Obsidian 增强功能。",
+  "author": "Sircatx",
+  "isDesktopOnly": false
+}

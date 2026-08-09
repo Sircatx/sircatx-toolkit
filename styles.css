@@ -1,0 +1,119 @@
+.view-mode-lock-override-property input[type="text"] {
+	width: min(260px, 100%);
+}
+
+.sircatx-toolkit-module-group {
+	margin-bottom: 26px;
+}
+
+.sircatx-toolkit-module-group > .setting-item-heading .setting-item-name,
+.sircatx-toolkit-module-group > .setting-group-heading,
+.sircatx-toolkit-module-heading .setting-item-name {
+	font-size: 1.35em;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.sircatx-toolkit-module-heading {
+	padding: 12px 16px 10px;
+	border-radius: var(--radius-l) var(--radius-l) 0 0;
+	background: var(--background-secondary);
+}
+
+.sircatx-toolkit-module-divider {
+	margin-top: 26px;
+}
+
+.copy-to-clipboard-icon {
+	cursor: pointer;
+}
+
+.copy-to-clipboard-icon svg {
+	width: 1em;
+	height: 1em;
+	vertical-align: text-bottom;
+	pointer-events: none;
+}
+
+.icon-margin-left {
+	margin-left: 0.25em;
+}
+
+
+.view-mode-lock-rule-card {
+	flex-wrap: wrap;
+	margin-block: 6px;
+	padding: 10px 12px;
+	border: 0;
+	border-radius: var(--radius-m);
+	background: var(--background-secondary);
+}
+
+.view-mode-lock-rule-card > .setting-item-info {
+	min-width: 120px;
+}
+
+.view-mode-lock-rule-card > .setting-item-control {
+	flex-wrap: wrap;
+}
+
+.view-mode-lock-rule-fields {
+	flex: 1 0 100%;
+	width: 100%;
+	margin-top: 4px;
+}
+
+.view-mode-lock-rule-fields > .setting-item {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(220px, 320px);
+	gap: 16px;
+	align-items: center;
+	padding: 7px 0;
+	border: 0;
+}
+
+.view-mode-lock-rule-fields .setting-item-info,
+.view-mode-lock-rule-fields .setting-item-control,
+.view-mode-lock-rule-fields input[type="text"] {
+	width: 100%;
+	min-width: 0;
+}
+
+body.is-mobile .view-mode-lock-rule-card,
+body.is-tablet .view-mode-lock-rule-card {
+	padding: 14px 16px;
+	border-radius: 22px;
+	background: var(--background-primary);
+	box-shadow: 0 1px 2px rgb(0 0 0 / 4%);
+}
+
+body.is-mobile .view-mode-lock-rule-card > .setting-item-control,
+body.is-tablet .view-mode-lock-rule-card > .setting-item-control {
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.25fr) auto;
+	gap: 8px;
+	width: 100%;
+}
+
+body.is-mobile .view-mode-lock-rule-fields > .setting-item,
+body.is-tablet .view-mode-lock-rule-fields > .setting-item {
+	display: block;
+	padding: 10px 0 0;
+}
+
+body.is-mobile .view-mode-lock-rule-fields .setting-item-info,
+body.is-tablet .view-mode-lock-rule-fields .setting-item-info {
+	margin-bottom: 8px;
+}
+
+body.is-mobile .view-mode-lock-rule-fields input[type="text"],
+body.is-tablet .view-mode-lock-rule-fields input[type="text"] {
+	width: 100%;
+}
+
+@media (max-width: 600px) {
+	.view-mode-lock-rule-card > .setting-item-info,
+	.view-mode-lock-rule-card > .setting-item-control {
+		width: 100%;
+	}
+}

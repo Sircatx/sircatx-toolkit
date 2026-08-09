@@ -1,0 +1,28 @@
+{
+  "name": "obsidian-sircatx-toolkit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "可扩展的 Obsidian 中文增强工具箱。",
+  "main": "main.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit && node esbuild.config.mjs production",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@codemirror/language": "^6.12.4",
+    "@codemirror/state": "^6.7.1",
+    "@codemirror/view": "^6.38.6",
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^22.10.0",
+    "esbuild": "^0.25.5",
+    "eslint": "^9.39.4",
+    "eslint-plugin-obsidianmd": "^0.4.0",
+    "globals": "^17.6.0",
+    "jiti": "^2.6.1",
+    "obsidian": "latest",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.59.1"
+  }
+}
