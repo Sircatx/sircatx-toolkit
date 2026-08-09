@@ -72,7 +72,9 @@ export default class ViewModeLockPlugin extends Plugin {
 				desktop: this.normalizeDevicePolicy(stored?.devicePolicies?.desktop),
 				mobile: this.normalizeDevicePolicy(stored?.devicePolicies?.mobile)
 			},
-			overrideProperty: stored?.overrideProperty?.trim() || DEFAULT_SETTINGS.overrideProperty,
+			overrideProperty: !stored?.overrideProperty?.trim() || stored.overrideProperty.trim() === "阅读模式锁定"
+				? DEFAULT_SETTINGS.overrideProperty
+				: stored.overrideProperty.trim(),
 			noteUpdatedPropertyName: !stored?.noteUpdatedPropertyName?.trim() || stored.noteUpdatedPropertyName.trim() === "最后更新时间"
 				? DEFAULT_SETTINGS.noteUpdatedPropertyName
 				: stored.noteUpdatedPropertyName.trim(),

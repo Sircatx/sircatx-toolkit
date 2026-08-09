@@ -57,7 +57,7 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 		desktop: "follow-rules",
 		mobile: "follow-rules"
 	},
-	overrideProperty: "阅读模式锁定",
+	overrideProperty: "阅读模式",
 	rules: [],
 	copyInlineCodeEnabled: true,
 	noteUpdatedPropertyEnabled: true,

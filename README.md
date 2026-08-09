@@ -40,10 +40,10 @@ Device behavior has the highest priority:
 
 ### Note-level override
 
-Add the `阅读模式锁定` property to a note:
+Add the `阅读模式` property to a note:
 
 ```yaml
-阅读模式锁定: reading
+阅读模式: reading
 ```
 
 Supported values are `是` and `reading`. Both lock the note in Reading view. The property name can be changed in plugin settings.
@@ -79,7 +79,7 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 - 在阅读视图和实时预览的行内代码后显示 📋，点击即可复制，代码块不受影响。
 - 分别设置桌面端和移动端的阅读模式锁定行为。
 - 按文件夹、标签或属性值建立锁定规则。
-- 使用 `阅读模式锁定: 是` 或 `阅读模式锁定: reading` 为单篇笔记启用阅读模式锁定。
+- 使用 `阅读模式: 是` 或 `阅读模式: reading` 为单篇笔记启用阅读模式锁定。
 - 输入规则时自动提示现有文件夹、标签、属性及属性值。
 - 停止编辑 30 秒后，自动维护当前笔记的 `更新时间` 属性，格式为 `YYYY-MM-DD HH:mm`。
 - 新建 Markdown 笔记时自动添加该属性，可在设置中关闭。
