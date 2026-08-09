@@ -1,58 +1,55 @@
 # Sircatx Toolkit
 
-一款原生中文、可持续扩展的 Obsidian 工具箱。
+English | [简体中文](#简体中文)
 
-## 功能
+A modular toolkit that combines small, independently configurable note enhancements.
 
-- 分别设置桌面端和移动端的锁定行为。
-- 按文件夹、标签或属性值建立视图锁定规则。
-- 使用笔记属性为单篇笔记启用阅读模式锁定。
-- 输入规则时自动提示现有文件夹、标签、属性及属性值。
-- 在阅读视图或实时预览的行内代码后显示 📋，点击即可复制；代码块不受影响。
-- 支持桌面端和移动端。
+## Features
 
-## 使用方法
+### Inline code copy
 
-安装并启用插件后，打开 **设置 → Sircatx Toolkit**。
+- Shows a 📋 icon after inline code in Reading view and Live Preview.
+- Copies the inline code text when the icon is clicked.
+- Does not affect fenced code blocks.
 
-设备行为优先级最高，每种设备可以选择：
+### Reading mode lock
 
-- **遵循现有规则**：依次应用单篇笔记覆盖和匹配规则。
-- **始终使用阅读视图**：在当前设备上强制所有笔记使用阅读视图。
-- **禁用锁定**：在当前设备上允许自由切换视图。
+- Configures separate behavior for desktop and mobile devices.
+- Locks notes by folder, tag, or property rules.
+- Enables Reading view lock for an individual note with a configurable property.
+- Suggests existing folders, tags, properties, and property values while editing rules.
 
-### 单篇笔记覆盖
+## Usage
 
-在笔记属性中添加 `阅读模式锁定`：
+Open **Settings → Sircatx Toolkit** after installing and enabling the plugin.
+
+Device behavior has the highest priority:
+
+- **Follow existing rules** applies the note-level override and matching rules.
+- **Always use Reading view** forces every note into Reading view on that device.
+- **Disable locking** allows view modes to be changed freely on that device.
+
+### Note-level override
+
+Add the `阅读模式锁定` property to a note:
 
 ```yaml
 阅读模式锁定: reading
 ```
 
-支持的值：
+Supported values are `是` and `reading`. Both lock the note in Reading view. The property name can be changed in plugin settings.
 
-- `是`：阅读模式
-- `reading`：阅读视图
+### Rule priority
 
-属性名称可在插件设置中修改。
+1. Device behavior
+2. Note-level override
+3. Folder, tag, or property rule
 
-### 规则优先级
+## Manual installation
 
-1. 设备行为
-2. 单篇笔记覆盖
-3. 文件夹、标签或属性规则
+Copy `main.js`, `manifest.json`, and `styles.css` into `.obsidian/plugins/sircatx-toolkit/`. Reload the app, then enable **Sircatx Toolkit** under Community plugins.
 
-## 手动安装
-
-将以下文件复制到 `.obsidian/plugins/sircatx-toolkit/`：
-
-- `main.js`
-- `manifest.json`
-- `styles.css`
-
-重新加载 Obsidian 后，在第三方插件列表中启用“Sircatx Toolkit”。请勿同时启用功能重复的独立插件。
-
-## 开发
+## Development
 
 ```bash
 npm install
@@ -60,6 +57,20 @@ npm run build
 npm run lint
 ```
 
-## 许可
+## License
 
-本项目采用 MIT 许可证。核心实现衍生自 GOODJINC 的 View Mode Lock，并保留原许可证与署名。
+MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode Lock and retains the original license attribution.
+
+## 简体中文
+
+一款原生中文、可持续扩展的工具箱，各项功能可独立配置。
+
+### 功能
+
+- 在阅读视图和实时预览的行内代码后显示 📋，点击即可复制，代码块不受影响。
+- 分别设置桌面端和移动端的阅读模式锁定行为。
+- 按文件夹、标签或属性值建立锁定规则。
+- 使用 `阅读模式锁定: 是` 或 `阅读模式锁定: reading` 为单篇笔记启用阅读模式锁定。
+- 输入规则时自动提示现有文件夹、标签、属性及属性值。
+
+安装后打开 **设置 → Sircatx Toolkit** 进行配置。请勿同时启用功能重复的独立插件。
