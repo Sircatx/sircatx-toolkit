@@ -17,6 +17,13 @@ export class NoteUpdatedPropertyManager {
 			if (this.writing.has(file.path)) return;
 			this.schedule(file);
 		}));
+		this.plugin.app.workspace.onLayoutReady(() => {
+			this.plugin.registerEvent(this.plugin.app.vault.on("create", (file) => {
+				if (!(file instanceof TFile) || file.extension !== "md") return;
+				if (!this.plugin.settings.noteUpdatedPropertyEnabled || !this.plugin.settings.addUpdatedPropertyToNewNotes) return;
+				window.setTimeout(() => void this.addToNewNote(file), 500);
+			}));
+		});
 		this.plugin.register(() => this.clear());
 	}
 
@@ -47,6 +54,24 @@ export class NoteUpdatedPropertyManager {
 			await this.plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
 				const properties = frontmatter as Record<string, unknown>;
 				if (properties[property] !== value) properties[property] = value;
+			});
+		} finally {
+			window.setTimeout(() => this.writing.delete(file.path), 500);
+		}
+	}
+
+	private async addToNewNote(file: TFile): Promise<void> {
+		if (!this.plugin.settings.noteUpdatedPropertyEnabled || !this.plugin.settings.addUpdatedPropertyToNewNotes) return;
+		const property = this.plugin.settings.noteUpdatedPropertyName.trim();
+		if (!property || this.plugin.app.vault.getFileByPath(file.path) === null) return;
+		const value = this.formatLocalDate(new Date());
+		this.writing.add(file.path);
+		try {
+			await this.plugin.app.fileManager.processFrontMatter(file, (frontmatter) => {
+				const properties = frontmatter as Record<string, unknown>;
+				if (properties[property] === undefined || properties[property] === null || properties[property] === "") {
+					properties[property] = value;
+				}
 			});
 		} finally {
 			window.setTimeout(() => this.writing.delete(file.path), 500);

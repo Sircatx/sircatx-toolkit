@@ -22,6 +22,8 @@ export interface ViewModeLockSettings {
 	noteUpdatedPropertyEnabled: boolean;
 	/** Frontmatter property used for the last-updated timestamp. */
 	noteUpdatedPropertyName: string;
+	/** Adds the updated-time property when a Markdown note is created. */
+	addUpdatedPropertyToNewNotes: boolean;
 }
 
 export type LockRuleKind = "folder" | "tag" | "property";
@@ -57,7 +59,8 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 	rules: [],
 	copyInlineCodeEnabled: true,
 	noteUpdatedPropertyEnabled: true,
-	noteUpdatedPropertyName: "更新时间"
+	noteUpdatedPropertyName: "最后更新时间",
+	addUpdatedPropertyToNewNotes: true
 };
 
 class ValueSuggest extends AbstractInputSuggest<string> {
@@ -156,6 +159,17 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 								this.plugin.settings.noteUpdatedPropertyEnabled = value;
 								await this.plugin.saveSettings();
 								this.plugin.noteUpdatedProperty.refresh();
+							}));
+					}
+				}, {
+					name: translations.noteUpdatedNewNotes,
+					desc: translations.noteUpdatedNewNotesDesc,
+					render: (setting) => {
+						setting.addToggle((toggle) => toggle
+							.setValue(this.plugin.settings.addUpdatedPropertyToNewNotes)
+							.onChange(async (value) => {
+								this.plugin.settings.addUpdatedPropertyToNewNotes = value;
+								await this.plugin.saveSettings();
 							}));
 					}
 				}, {
