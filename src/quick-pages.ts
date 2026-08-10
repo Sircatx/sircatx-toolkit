@@ -17,9 +17,9 @@ export class QuickPagesManager {
 		this.commandIds.clear();
 		this.ribbonElements.clear();
 
-		const device = this.plugin.getCurrentDeviceKind();
+		if (this.plugin.getCurrentDeviceKind() !== "mobile") return;
 		for (const page of this.plugin.settings.quickPages) {
-			if (page.device !== device || !page.path.trim()) continue;
+			if (!page.path.trim()) continue;
 			const label = page.path.replace(/\.md$/i, "").split("/").pop() ?? page.path;
 			const commandId = `open-quick-page-${page.id}`;
 			this.plugin.addCommand({

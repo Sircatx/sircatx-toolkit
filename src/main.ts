@@ -97,8 +97,8 @@ export default class ViewModeLockPlugin extends Plugin {
 				? stored.quickPages.filter((page) => page
 					&& typeof page.id === "string"
 					&& typeof page.path === "string"
-					&& (page.device === "desktop" || page.device === "mobile"))
-					.map((page) => ({ ...page, path: page.path.trim() }))
+					&& (page.device === undefined || page.device === "mobile"))
+					.map((page) => ({ id: page.id, path: page.path.trim() }))
 				: [],
 			overrideProperty: !stored?.overrideProperty?.trim() || stored.overrideProperty.trim() === "阅读模式锁定"
 				? DEFAULT_SETTINGS.overrideProperty

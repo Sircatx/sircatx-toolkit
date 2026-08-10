@@ -46,7 +46,8 @@ export type DevicePolicy = "follow-rules" | "force-reading" | "disable-lock";
 export interface QuickPage {
 	id: string;
 	path: string;
-	device: DeviceKind;
+	/** Legacy field used only while migrating pre-1.8.1 settings. */
+	device?: DeviceKind;
 }
 
 export interface LockRule {
@@ -247,15 +248,6 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 					desc: page.path || translations.chooseQuickPage,
 					render: (setting) => {
 						setting.settingEl.addClass("view-mode-lock-rule-card");
-						setting.addDropdown((dropdown) => dropdown
-							.addOption("desktop", translations.desktop)
-							.addOption("mobile", translations.mobile)
-							.setValue(page.device)
-							.onChange(async (value) => {
-								page.device = value as DeviceKind;
-								await this.plugin.saveSettings();
-								this.plugin.quickPages.refresh();
-							}));
 						setting.addText((input) => {
 							input.setPlaceholder(translations.chooseQuickPage).setValue(page.path);
 							input.inputEl.readOnly = true;
@@ -539,8 +531,7 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 	private async addQuickPage(): Promise<void> {
 		this.plugin.settings.quickPages.push({
 			id: crypto.randomUUID(),
-			path: "",
-			device: "mobile"
+			path: ""
 		});
 		await this.plugin.saveSettings();
 		this.refreshSettings();
