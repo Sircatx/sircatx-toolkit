@@ -2,7 +2,7 @@
 
 English | [简体中文](#简体中文)
 
-A modular toolkit that combines small, independently configurable note enhancements.
+A modular Obsidian toolkit for startup homepages, quick search, inline code copying, updated-time properties, and reading mode locks. Every feature is independently configurable on desktop and mobile where applicable.
 
 ## Features
 
@@ -88,7 +88,7 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 
 ## 简体中文
 
-一款原生中文、可持续扩展的工具箱，各项功能可独立配置。
+一款模块化的 Obsidian 增强工具箱，提供启动主页、快捷搜索、行内代码复制、笔记更新时间维护和阅读模式锁定。各项功能可独立配置，并在适用时支持桌面端和移动端。
 
 ### 功能
 

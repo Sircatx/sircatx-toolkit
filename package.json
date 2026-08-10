@@ -1,6 +1,6 @@
 {
   "name": "obsidian-sircatx-toolkit",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "private": true,
   "description": "可扩展的 Obsidian 中文增强工具箱。",
   "main": "main.js",
