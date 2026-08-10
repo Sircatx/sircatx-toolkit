@@ -207,8 +207,7 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 				type: "group",
 				heading: translations.startupHomepageHeading,
 				cls: "sircatx-toolkit-module-group",
-				items: [
-				...(["desktop", "mobile"] as const).map((device): SettingDefinition => ({
+				items: (["desktop", "mobile"] as const).map((device): SettingDefinition => ({
 					name: translations[`${device}Homepage`],
 					desc: translations[`${device}HomepageDesc`],
 					render: (setting) => {
@@ -233,13 +232,16 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 							.setTooltip(translations.openHomepageNow)
 							.onClick(() => void this.plugin.startupHomepage.open(device)));
 					}
-				})),
+				}))
+			},
+			{
+				type: "group",
+				heading: translations.quickPagesHeading,
+				cls: "sircatx-toolkit-module-group",
+				items: [
 				{
-					name: translations.quickPagesHeading,
-					desc: translations.quickPagesDesc,
-					render: (setting) => {
-						setting.setHeading();
-					}
+					name: translations.quickPagesName,
+					desc: translations.quickPagesDesc
 				},
 				...this.plugin.settings.quickPages.map((page, index): SettingDefinition => ({
 					name: page.path

@@ -62,6 +62,7 @@ export interface Translations {
 	openHomepageNow: string;
 	myHomepage: string;
 	quickPagesHeading: string;
+	quickPagesName: string;
 	quickPagesDesc: string;
 	quickPage: (number: number) => string;
 	chooseQuickPage: string;
@@ -139,8 +140,9 @@ const EN: Translations = {
 	chooseHomepage: "Click to choose a homepage note",
 	openHomepageNow: "Open now",
 	myHomepage: "My homepage",
-	quickPagesHeading: "Quick pages",
-	quickPagesDesc: "Add note shortcuts to the mobile function area.",
+	quickPagesHeading: "Shortcuts",
+	quickPagesName: "Note shortcuts",
+	quickPagesDesc: "Open frequently used notes from the phone function area.",
 	quickPage: (number) => `Quick page ${number}`,
 	chooseQuickPage: "Click to choose a note",
 	addQuickPageDesc: "Add a mobile note shortcut.",
@@ -217,8 +219,9 @@ const KO: Translations = {
 	chooseHomepage: "클릭하여 홈페이지 노트 선택",
 	openHomepageNow: "지금 열기",
 	myHomepage: "내 홈페이지",
-	quickPagesHeading: "빠른 페이지",
-	quickPagesDesc: "모바일 기능 영역에 노트 바로가기를 추가합니다.",
+	quickPagesHeading: "바로가기",
+	quickPagesName: "노트 바로가기",
+	quickPagesDesc: "휴대폰 기능 영역에서 자주 쓰는 노트를 빠르게 엽니다.",
 	quickPage: (number) => `빠른 페이지 ${number}`,
 	chooseQuickPage: "클릭하여 노트 선택",
 	addQuickPageDesc: "모바일 노트 바로가기를 추가합니다.",
@@ -295,11 +298,12 @@ const ZH_CN: Translations = {
 	chooseHomepage: "点击选择主页笔记",
 	openHomepageNow: "立即打开",
 	myHomepage: "我的主页",
-	quickPagesHeading: "快捷页面",
-	quickPagesDesc: "添加移动端笔记快捷入口。",
+	quickPagesHeading: "快捷入口",
+	quickPagesName: "笔记快捷入口",
+	quickPagesDesc: "在手机功能区快速打开常用笔记。",
 	quickPage: (number) => `快捷页面 ${number}`,
 	chooseQuickPage: "点击选择笔记",
-	addQuickPageDesc: "添加移动端笔记快捷入口。",
+	addQuickPageDesc: "添加常用笔记。",
 	addQuickPage: "添加快捷页面",
 	deleteQuickPage: "删除快捷页面",
 	quickSearchHeading: "快捷搜索",
