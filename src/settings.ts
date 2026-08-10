@@ -78,10 +78,18 @@ class ValueSuggest extends AbstractInputSuggest<string> {
 		app: App,
 		inputEl: HTMLInputElement,
 		private readonly candidates: string[] | (() => string[]),
-		private readonly onChoose: (value: string) => void
+		private readonly onChoose: (value: string) => void,
+		openOnFocus = false
 	) {
 		super(app, inputEl);
 		this.limit = Number.POSITIVE_INFINITY;
+		if (openOnFocus) {
+			const showSuggestions = (): void => {
+				inputEl.dispatchEvent(new Event("input", { bubbles: true }));
+			};
+			inputEl.addEventListener("focus", showSuggestions);
+			inputEl.addEventListener("click", showSuggestions);
+		}
 	}
 
 	getSuggestions(query: string): string[] {
@@ -154,10 +162,10 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 									this.plugin.settings.startupHomepagePaths[device] = value.trim();
 									await this.plugin.saveSettings();
 								});
-							new ValueSuggest(this.app, input.inputEl, catalog.markdownFiles, (value) => {
-								this.plugin.settings.startupHomepagePaths[device] = value;
-								void this.plugin.saveSettings();
-							});
+			new ValueSuggest(this.app, input.inputEl, catalog.markdownFiles, (value) => {
+				this.plugin.settings.startupHomepagePaths[device] = value;
+				void this.plugin.saveSettings();
+			}, true);
 						});
 						setting.addExtraButton((button) => button
 							.setIcon("home")

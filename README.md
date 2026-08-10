@@ -10,7 +10,7 @@ A modular toolkit that combines small, independently configurable note enhanceme
 
 - Selects separate startup notes for desktop and mobile devices.
 - Opens the configured note once after the workspace is ready.
-- Provides note-path suggestions and an Open now button in settings.
+- Clicking the input opens the note list immediately; typing filters it. Settings also provide an Open now button.
 - Leaving a device path empty disables the feature on that device.
 
 ### Inline code copy
