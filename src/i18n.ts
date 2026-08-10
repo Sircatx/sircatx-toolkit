@@ -67,6 +67,8 @@ export interface Translations {
 	quickSearch: string;
 	quickSearchPlaceholder: string;
 	quickSearchDisabledNotice: string;
+	quickSearchReplaceMobileNavbar: string;
+	quickSearchReplaceMobileNavbarDesc: string;
 }
 
 const EN: Translations = {
@@ -135,7 +137,9 @@ const EN: Translations = {
 	quickSearchEnabledDesc: "Search note titles and cached properties without reading note bodies. Titles and aliases support full pinyin and initials.",
 	quickSearch: "Quick search",
 	quickSearchPlaceholder: "Search titles and properties",
-	quickSearchDisabledNotice: "Quick search is disabled in plugin settings."
+	quickSearchDisabledNotice: "Quick search is disabled in plugin settings.",
+	quickSearchReplaceMobileNavbar: "Use Quick search from the mobile bottom search button",
+	quickSearchReplaceMobileNavbarDesc: "Redirect the magnifying-glass button in the mobile bottom navigation bar. Turn this off to restore Obsidian's full-text search."
 };
 
 const KO: Translations = {
@@ -204,7 +208,9 @@ const KO: Translations = {
 	quickSearchEnabledDesc: "노트 본문을 읽지 않고 제목과 캐시된 속성을 검색합니다. 제목과 별칭은 전체 병음과 첫 글자를 지원합니다.",
 	quickSearch: "빠른 검색",
 	quickSearchPlaceholder: "제목 및 속성 검색",
-	quickSearchDisabledNotice: "플러그인 설정에서 빠른 검색이 비활성화되어 있습니다."
+	quickSearchDisabledNotice: "플러그인 설정에서 빠른 검색이 비활성화되어 있습니다.",
+	quickSearchReplaceMobileNavbar: "모바일 하단 검색 버튼에서 빠른 검색 사용",
+	quickSearchReplaceMobileNavbarDesc: "모바일 하단 탐색 막대의 돋보기 버튼을 전환합니다. Obsidian 전체 텍스트 검색을 복원하려면 끄세요."
 };
 
 const ZH_CN: Translations = {
@@ -273,7 +279,9 @@ const ZH_CN: Translations = {
 	quickSearchEnabledDesc: "只搜索笔记标题和已缓存的笔记属性，不读取正文；标题和别名支持全拼与拼音首字母。",
 	quickSearch: "快捷搜索",
 	quickSearchPlaceholder: "搜索标题和笔记属性",
-	quickSearchDisabledNotice: "快捷搜索已在插件设置中关闭。"
+	quickSearchDisabledNotice: "快捷搜索已在插件设置中关闭。",
+	quickSearchReplaceMobileNavbar: "移动端底部搜索按钮打开快捷搜索",
+	quickSearchReplaceMobileNavbarDesc: "接管移动端底部导航栏的放大镜按钮；关闭后恢复 Obsidian 原生全文搜索。"
 };
 
 export function getTranslations(): Translations {

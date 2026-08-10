@@ -35,6 +35,7 @@ export default class ViewModeLockPlugin extends Plugin {
 		this.noteUpdatedProperty.register();
 		this.updatedPropertyReadonly.register();
 		this.startupHomepage.register();
+		this.quickSearch.register();
 		const translations = getTranslations();
 		this.addRibbonIcon("home", translations.myHomepage, () => void this.startupHomepage.openCurrent());
 		this.addRibbonIcon("search", translations.quickSearch, () => this.quickSearch.open());

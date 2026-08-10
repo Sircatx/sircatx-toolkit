@@ -32,6 +32,8 @@ export interface ViewModeLockSettings {
 	startupHomepagePaths: Record<DeviceKind, string>;
 	/** Searches note titles and cached properties without reading note bodies. */
 	quickSearchEnabled: boolean;
+	/** Redirects the mobile navbar search action to Quick search. */
+	quickSearchReplaceMobileNavbar: boolean;
 }
 
 export type LockRuleKind = "folder" | "tag" | "property";
@@ -74,7 +76,8 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 		desktop: "",
 		mobile: ""
 	},
-	quickSearchEnabled: true
+	quickSearchEnabled: true,
+	quickSearchReplaceMobileNavbar: false
 };
 
 class ValueSuggest extends AbstractInputSuggest<string> {
@@ -173,6 +176,18 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 							.setValue(this.plugin.settings.quickSearchEnabled)
 							.onChange(async (value) => {
 								this.plugin.settings.quickSearchEnabled = value;
+								await this.plugin.saveSettings();
+							}));
+					}
+				}, {
+					name: translations.quickSearchReplaceMobileNavbar,
+					desc: translations.quickSearchReplaceMobileNavbarDesc,
+					render: (setting) => {
+						setting.addToggle((toggle) => toggle
+							.setValue(this.plugin.settings.quickSearchReplaceMobileNavbar)
+							.setDisabled(!this.plugin.settings.quickSearchEnabled)
+							.onChange(async (value) => {
+								this.plugin.settings.quickSearchReplaceMobileNavbar = value;
 								await this.plugin.saveSettings();
 							}));
 					}

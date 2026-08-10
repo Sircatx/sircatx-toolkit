@@ -1,4 +1,4 @@
-import { FuzzySuggestModal, Notice, TFile } from "obsidian";
+import { FuzzySuggestModal, Notice, Platform, TFile } from "obsidian";
 import { getTranslations } from "./i18n";
 import type ViewModeLockPlugin from "./main";
 
@@ -61,6 +61,23 @@ class QuickSearchModal extends FuzzySuggestModal<QuickSearchItem> {
 
 export class QuickSearchManager {
 	constructor(private readonly plugin: ViewModeLockPlugin) {}
+
+	register(): void {
+		this.plugin.registerDomEvent(document, "click", (event) => {
+			if (!Platform.isMobileApp
+				|| !this.plugin.settings.quickSearchEnabled
+				|| !this.plugin.settings.quickSearchReplaceMobileNavbar) return;
+
+			const target = event.target;
+			if (!(target instanceof Element)) return;
+			const action = target.closest(".mobile-navbar .mobile-navbar-action");
+			if (!action?.querySelector("svg.lucide-search, .svg-icon.lucide-search")) return;
+
+			event.preventDefault();
+			event.stopImmediatePropagation();
+			this.open();
+		}, { capture: true });
+	}
 
 	open(): void {
 		if (!this.plugin.settings.quickSearchEnabled) {
