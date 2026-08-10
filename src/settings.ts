@@ -1,8 +1,10 @@
 import {
 	AbstractInputSuggest,
 	App,
+	FuzzySuggestModal,
 	PluginSettingTab,
 	Setting,
+	TFile,
 	type SettingDefinition,
 	type SettingDefinitionItem
 } from "obsidian";
@@ -49,7 +51,6 @@ export interface LockRule {
 
 export interface SuggestionCatalog {
 	folders: string[];
-	markdownFiles: string[];
 	tags: string[];
 	properties: string[];
 	propertyValues: Map<string, string[]>;
@@ -78,18 +79,10 @@ class ValueSuggest extends AbstractInputSuggest<string> {
 		app: App,
 		inputEl: HTMLInputElement,
 		private readonly candidates: string[] | (() => string[]),
-		private readonly onChoose: (value: string) => void,
-		openOnFocus = false
+		private readonly onChoose: (value: string) => void
 	) {
 		super(app, inputEl);
 		this.limit = Number.POSITIVE_INFINITY;
-		if (openOnFocus) {
-			const showSuggestions = (): void => {
-				inputEl.dispatchEvent(new Event("input", { bubbles: true }));
-			};
-			inputEl.addEventListener("focus", showSuggestions);
-			inputEl.addEventListener("click", showSuggestions);
-		}
 	}
 
 	getSuggestions(query: string): string[] {
@@ -108,6 +101,25 @@ class ValueSuggest extends AbstractInputSuggest<string> {
 		this.setValue(value);
 		this.onChoose(value);
 		this.close();
+	}
+}
+
+class HomepageNoteModal extends FuzzySuggestModal<TFile> {
+	constructor(app: App, private readonly onChoose: (file: TFile) => void) {
+		super(app);
+		this.inputEl.placeholder = "搜索主页笔记";
+	}
+
+	getItems(): TFile[] {
+		return this.app.vault.getMarkdownFiles();
+	}
+
+	getItemText(file: TFile): string {
+		return file.path;
+	}
+
+	onChooseItem(file: TFile): void {
+		this.onChoose(file);
 	}
 }
 
@@ -162,10 +174,13 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 									this.plugin.settings.startupHomepagePaths[device] = value.trim();
 									await this.plugin.saveSettings();
 								});
-			new ValueSuggest(this.app, input.inputEl, catalog.markdownFiles, (value) => {
-				this.plugin.settings.startupHomepagePaths[device] = value;
-				void this.plugin.saveSettings();
-			}, true);
+							input.inputEl.addEventListener("click", () => {
+								new HomepageNoteModal(this.app, (file) => {
+									input.setValue(file.path);
+									this.plugin.settings.startupHomepagePaths[device] = file.path;
+									void this.plugin.saveSettings();
+								}).open();
+							});
 						});
 						setting.addExtraButton((button) => button
 							.setIcon("home")

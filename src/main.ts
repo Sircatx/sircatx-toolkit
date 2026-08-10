@@ -33,6 +33,7 @@ export default class ViewModeLockPlugin extends Plugin {
 		this.updatedPropertyReadonly.register();
 		this.startupHomepage.register();
 		const translations = getTranslations();
+		this.addRibbonIcon("home", translations.myHomepage, () => void this.startupHomepage.openCurrent());
 
 		this.addCommand({
 			id: "toggle-current-note-lock",
@@ -216,7 +217,6 @@ export default class ViewModeLockPlugin extends Plugin {
 
 	getSuggestionCatalog(): {
 		folders: string[];
-		markdownFiles: string[];
 		tags: string[];
 		properties: string[];
 		propertyValues: Map<string, string[]>;
@@ -261,7 +261,6 @@ export default class ViewModeLockPlugin extends Plugin {
 
 		return {
 			folders: this.app.vault.getAllFolders().map((folder) => folder.path).filter(Boolean).sort(),
-			markdownFiles: this.app.vault.getMarkdownFiles().map((file) => file.path).sort(),
 			tags: [...tags].sort(),
 			properties: [...properties].sort(),
 			propertyValues: new Map([...propertyValues].map(([key, values]) => [key, [...values].sort()]))

@@ -21,6 +21,15 @@ export class StartupHomepageManager {
 		await this.plugin.app.workspace.getLeaf(false).openFile(file, { active: true });
 	}
 
+	async openCurrent(): Promise<void> {
+		const device = this.plugin.getCurrentDeviceKind();
+		if (!this.plugin.settings.startupHomepagePaths[device].trim()) {
+			new Notice("请先在插件设置中选择主页笔记");
+			return;
+		}
+		await this.open(device);
+	}
+
 	private async openForStartup(): Promise<void> {
 		const device = this.plugin.getCurrentDeviceKind();
 		const path = this.plugin.settings.startupHomepagePaths[device].trim();

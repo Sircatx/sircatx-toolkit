@@ -60,6 +60,7 @@ export interface Translations {
 	mobileHomepageDesc: string;
 	chooseHomepage: string;
 	openHomepageNow: string;
+	myHomepage: string;
 }
 
 const EN: Translations = {
@@ -120,8 +121,9 @@ const EN: Translations = {
 	desktopHomepageDesc: "Open this note when the desktop app starts. Leave empty to disable.",
 	mobileHomepage: "Mobile homepage",
 	mobileHomepageDesc: "Open this note when the mobile app starts. Leave empty to disable.",
-	chooseHomepage: "Choose a Markdown note",
-	openHomepageNow: "Open now"
+	chooseHomepage: "Click to choose a homepage note",
+	openHomepageNow: "Open now",
+	myHomepage: "My homepage"
 };
 
 const KO: Translations = {
@@ -182,8 +184,9 @@ const KO: Translations = {
 	desktopHomepageDesc: "데스크톱 앱 시작 시 이 노트를 엽니다. 비워 두면 사용하지 않습니다.",
 	mobileHomepage: "모바일 홈페이지",
 	mobileHomepageDesc: "모바일 앱 시작 시 이 노트를 엽니다. 비워 두면 사용하지 않습니다.",
-	chooseHomepage: "Markdown 노트 선택",
-	openHomepageNow: "지금 열기"
+	chooseHomepage: "클릭하여 홈페이지 노트 선택",
+	openHomepageNow: "지금 열기",
+	myHomepage: "내 홈페이지"
 };
 
 const ZH_CN: Translations = {
@@ -244,8 +247,9 @@ const ZH_CN: Translations = {
 	desktopHomepageDesc: "桌面端启动时自动打开这篇笔记；留空则关闭。",
 	mobileHomepage: "移动端主页",
 	mobileHomepageDesc: "手机或平板启动时自动打开这篇笔记；留空则关闭。",
-	chooseHomepage: "选择 Markdown 笔记",
-	openHomepageNow: "立即打开"
+	chooseHomepage: "点击选择主页笔记",
+	openHomepageNow: "立即打开",
+	myHomepage: "我的主页"
 };
 
 export function getTranslations(): Translations {

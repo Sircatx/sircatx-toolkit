@@ -10,7 +10,7 @@ A modular toolkit that combines small, independently configurable note enhanceme
 
 - Selects separate startup notes for desktop and mobile devices.
 - Opens the configured note once after the workspace is ready.
-- Clicking the input opens the note list immediately; typing filters it. Settings also provide an Open now button.
+- Clicking the input opens a searchable note picker. A My homepage ribbon action is available on desktop and in the mobile shortcuts menu.
 - Leaving a device path empty disables the feature on that device.
 
 ### Inline code copy
