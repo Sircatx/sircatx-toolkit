@@ -61,6 +61,12 @@ export interface Translations {
 	chooseHomepage: string;
 	openHomepageNow: string;
 	myHomepage: string;
+	quickSearchHeading: string;
+	quickSearchEnabled: string;
+	quickSearchEnabledDesc: string;
+	quickSearch: string;
+	quickSearchPlaceholder: string;
+	quickSearchDisabledNotice: string;
 }
 
 const EN: Translations = {
@@ -123,7 +129,13 @@ const EN: Translations = {
 	mobileHomepageDesc: "Open this note when the mobile app starts. Leave empty to disable.",
 	chooseHomepage: "Click to choose a homepage note",
 	openHomepageNow: "Open now",
-	myHomepage: "My homepage"
+	myHomepage: "My homepage",
+	quickSearchHeading: "Quick search",
+	quickSearchEnabled: "Enable quick search",
+	quickSearchEnabledDesc: "Search note titles and cached properties without reading note bodies. Titles and aliases support full pinyin and initials.",
+	quickSearch: "Quick search",
+	quickSearchPlaceholder: "Search titles and properties",
+	quickSearchDisabledNotice: "Quick search is disabled in plugin settings."
 };
 
 const KO: Translations = {
@@ -186,7 +198,13 @@ const KO: Translations = {
 	mobileHomepageDesc: "모바일 앱 시작 시 이 노트를 엽니다. 비워 두면 사용하지 않습니다.",
 	chooseHomepage: "클릭하여 홈페이지 노트 선택",
 	openHomepageNow: "지금 열기",
-	myHomepage: "내 홈페이지"
+	myHomepage: "내 홈페이지",
+	quickSearchHeading: "빠른 검색",
+	quickSearchEnabled: "빠른 검색 사용",
+	quickSearchEnabledDesc: "노트 본문을 읽지 않고 제목과 캐시된 속성을 검색합니다. 제목과 별칭은 전체 병음과 첫 글자를 지원합니다.",
+	quickSearch: "빠른 검색",
+	quickSearchPlaceholder: "제목 및 속성 검색",
+	quickSearchDisabledNotice: "플러그인 설정에서 빠른 검색이 비활성화되어 있습니다."
 };
 
 const ZH_CN: Translations = {
@@ -249,7 +267,13 @@ const ZH_CN: Translations = {
 	mobileHomepageDesc: "手机或平板启动时自动打开这篇笔记；留空则关闭。",
 	chooseHomepage: "点击选择主页笔记",
 	openHomepageNow: "立即打开",
-	myHomepage: "我的主页"
+	myHomepage: "我的主页",
+	quickSearchHeading: "快捷搜索",
+	quickSearchEnabled: "启用快捷搜索",
+	quickSearchEnabledDesc: "只搜索笔记标题和已缓存的笔记属性，不读取正文；标题和别名支持全拼与拼音首字母。",
+	quickSearch: "快捷搜索",
+	quickSearchPlaceholder: "搜索标题和笔记属性",
+	quickSearchDisabledNotice: "快捷搜索已在插件设置中关闭。"
 };
 
 export function getTranslations(): Translations {

@@ -30,6 +30,8 @@ export interface ViewModeLockSettings {
 	noteUpdatedPropertyReadonly: boolean;
 	/** Startup note selected independently for desktop and mobile. */
 	startupHomepagePaths: Record<DeviceKind, string>;
+	/** Searches note titles and cached properties without reading note bodies. */
+	quickSearchEnabled: boolean;
 }
 
 export type LockRuleKind = "folder" | "tag" | "property";
@@ -71,7 +73,8 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 	startupHomepagePaths: {
 		desktop: "",
 		mobile: ""
-	}
+	},
+	quickSearchEnabled: true
 };
 
 class ValueSuggest extends AbstractInputSuggest<string> {
@@ -158,6 +161,23 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 		];
 
 		return [
+			{
+				type: "group",
+				heading: translations.quickSearchHeading,
+				cls: "sircatx-toolkit-module-group",
+				items: [{
+					name: translations.quickSearchEnabled,
+					desc: translations.quickSearchEnabledDesc,
+					render: (setting) => {
+						setting.addToggle((toggle) => toggle
+							.setValue(this.plugin.settings.quickSearchEnabled)
+							.onChange(async (value) => {
+								this.plugin.settings.quickSearchEnabled = value;
+								await this.plugin.saveSettings();
+							}));
+					}
+				}]
+			},
 			{
 				type: "group",
 				heading: translations.startupHomepageHeading,

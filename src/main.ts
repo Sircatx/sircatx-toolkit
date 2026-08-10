@@ -5,6 +5,7 @@ import { registerCopyInlineCode } from "./copy-inline-code";
 import { NoteUpdatedPropertyManager } from "./note-updated-property";
 import { UpdatedPropertyReadonlyManager } from "./updated-property-readonly";
 import { StartupHomepageManager } from "./startup-homepage";
+import { QuickSearchManager } from "./quick-search";
 import {
 	DEFAULT_SETTINGS,
 	type DeviceKind,
@@ -22,6 +23,7 @@ export default class ViewModeLockPlugin extends Plugin {
 	readonly noteUpdatedProperty = new NoteUpdatedPropertyManager(this);
 	readonly updatedPropertyReadonly = new UpdatedPropertyReadonlyManager(this);
 	readonly startupHomepage = new StartupHomepageManager(this);
+	readonly quickSearch = new QuickSearchManager(this);
 	private enforceQueued = false;
 	private readonly metadataSuggestions = new Map<string, CachedMetadata>();
 	private suggestionIndexReady = false;
@@ -35,6 +37,12 @@ export default class ViewModeLockPlugin extends Plugin {
 		this.startupHomepage.register();
 		const translations = getTranslations();
 		this.addRibbonIcon("home", translations.myHomepage, () => void this.startupHomepage.openCurrent());
+		this.addRibbonIcon("search", translations.quickSearch, () => this.quickSearch.open());
+		this.addCommand({
+			id: "open-quick-search",
+			name: translations.quickSearch,
+			callback: () => this.quickSearch.open()
+		});
 
 		this.addCommand({
 			id: "toggle-current-note-lock",
