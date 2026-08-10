@@ -6,6 +6,13 @@ A modular toolkit that combines small, independently configurable note enhanceme
 
 ## Features
 
+### Startup homepage
+
+- Selects separate startup notes for desktop and mobile devices.
+- Opens the configured note once after the workspace is ready.
+- Provides note-path suggestions and an Open now button in settings.
+- Leaving a device path empty disables the feature on that device.
+
 ### Inline code copy
 
 - Shows a 📋 icon after inline code in Reading view and Live Preview.
@@ -76,6 +83,7 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 
 ### 功能
 
+- 分别设置桌面端和移动端的启动主页，打开应用后自动进入指定笔记。
 - 在阅读视图和实时预览的行内代码后显示 📋，点击即可复制，代码块不受影响。
 - 分别设置桌面端和移动端的阅读模式锁定行为。
 - 按文件夹、标签或属性值建立锁定规则。

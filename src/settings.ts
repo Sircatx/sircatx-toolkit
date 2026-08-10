@@ -26,6 +26,8 @@ export interface ViewModeLockSettings {
 	addUpdatedPropertyToNewNotes: boolean;
 	/** Prevents editing the managed property through the Properties UI. */
 	noteUpdatedPropertyReadonly: boolean;
+	/** Startup note selected independently for desktop and mobile. */
+	startupHomepagePaths: Record<DeviceKind, string>;
 }
 
 export type LockRuleKind = "folder" | "tag" | "property";
@@ -47,6 +49,7 @@ export interface LockRule {
 
 export interface SuggestionCatalog {
 	folders: string[];
+	markdownFiles: string[];
 	tags: string[];
 	properties: string[];
 	propertyValues: Map<string, string[]>;
@@ -63,7 +66,11 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 	noteUpdatedPropertyEnabled: true,
 	noteUpdatedPropertyName: "更新时间",
 	addUpdatedPropertyToNewNotes: true,
-	noteUpdatedPropertyReadonly: true
+	noteUpdatedPropertyReadonly: true,
+	startupHomepagePaths: {
+		desktop: "",
+		mobile: ""
+	}
 };
 
 class ValueSuggest extends AbstractInputSuggest<string> {
@@ -131,6 +138,34 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 		];
 
 		return [
+			{
+				type: "group",
+				heading: translations.startupHomepageHeading,
+				cls: "sircatx-toolkit-module-group",
+				items: (["desktop", "mobile"] as const).map((device): SettingDefinition => ({
+					name: translations[`${device}Homepage`],
+					desc: translations[`${device}HomepageDesc`],
+					render: (setting) => {
+						setting.addText((input) => {
+							input
+								.setPlaceholder(translations.chooseHomepage)
+								.setValue(this.plugin.settings.startupHomepagePaths[device])
+								.onChange(async (value) => {
+									this.plugin.settings.startupHomepagePaths[device] = value.trim();
+									await this.plugin.saveSettings();
+								});
+							new ValueSuggest(this.app, input.inputEl, catalog.markdownFiles, (value) => {
+								this.plugin.settings.startupHomepagePaths[device] = value;
+								void this.plugin.saveSettings();
+							});
+						});
+						setting.addExtraButton((button) => button
+							.setIcon("home")
+							.setTooltip(translations.openHomepageNow)
+							.onClick(() => void this.plugin.startupHomepage.open(device)));
+					}
+				}))
+			},
 			{
 				type: "group",
 				heading: translations.copyInlineCodeHeading,

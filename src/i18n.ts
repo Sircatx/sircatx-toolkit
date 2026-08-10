@@ -53,6 +53,13 @@ export interface Translations {
 	noteUpdatedNewNotesDesc: string;
 	noteUpdatedReadonly: string;
 	noteUpdatedReadonlyDesc: string;
+	startupHomepageHeading: string;
+	desktopHomepage: string;
+	desktopHomepageDesc: string;
+	mobileHomepage: string;
+	mobileHomepageDesc: string;
+	chooseHomepage: string;
+	openHomepageNow: string;
 }
 
 const EN: Translations = {
@@ -107,7 +114,14 @@ const EN: Translations = {
 	noteUpdatedNewNotes: "Add to new notes",
 	noteUpdatedNewNotesDesc: "Automatically add the updated-time property when a Markdown note is created.",
 	noteUpdatedReadonly: "Prevent manual editing",
-	noteUpdatedReadonlyDesc: "Make the managed value read-only in the Properties UI. Source mode can still edit YAML."
+	noteUpdatedReadonlyDesc: "Make the managed value read-only in the Properties UI. Source mode can still edit YAML.",
+	startupHomepageHeading: "Startup homepage",
+	desktopHomepage: "Desktop homepage",
+	desktopHomepageDesc: "Open this note when the desktop app starts. Leave empty to disable.",
+	mobileHomepage: "Mobile homepage",
+	mobileHomepageDesc: "Open this note when the mobile app starts. Leave empty to disable.",
+	chooseHomepage: "Choose a Markdown note",
+	openHomepageNow: "Open now"
 };
 
 const KO: Translations = {
@@ -162,7 +176,14 @@ const KO: Translations = {
 	noteUpdatedNewNotes: "새 노트에 추가",
 	noteUpdatedNewNotesDesc: "Markdown 노트를 만들 때 수정 시간 속성을 자동으로 추가합니다.",
 	noteUpdatedReadonly: "수동 편집 방지",
-	noteUpdatedReadonlyDesc: "속성 UI에서 관리되는 값을 읽기 전용으로 설정합니다. 소스 모드에서는 YAML을 계속 편집할 수 있습니다."
+	noteUpdatedReadonlyDesc: "속성 UI에서 관리되는 값을 읽기 전용으로 설정합니다. 소스 모드에서는 YAML을 계속 편집할 수 있습니다.",
+	startupHomepageHeading: "시작 홈페이지",
+	desktopHomepage: "데스크톱 홈페이지",
+	desktopHomepageDesc: "데스크톱 앱 시작 시 이 노트를 엽니다. 비워 두면 사용하지 않습니다.",
+	mobileHomepage: "모바일 홈페이지",
+	mobileHomepageDesc: "모바일 앱 시작 시 이 노트를 엽니다. 비워 두면 사용하지 않습니다.",
+	chooseHomepage: "Markdown 노트 선택",
+	openHomepageNow: "지금 열기"
 };
 
 const ZH_CN: Translations = {
@@ -217,7 +238,14 @@ const ZH_CN: Translations = {
 	noteUpdatedNewNotes: "新建笔记时添加属性",
 	noteUpdatedNewNotesDesc: "新建 Markdown 笔记时，自动添加更新时间属性。",
 	noteUpdatedReadonly: "禁止手动修改",
-	noteUpdatedReadonlyDesc: "在笔记属性界面中将更新时间设为只读；源码模式仍可直接修改 YAML。"
+	noteUpdatedReadonlyDesc: "在笔记属性界面中将更新时间设为只读；源码模式仍可直接修改 YAML。",
+	startupHomepageHeading: "启动主页",
+	desktopHomepage: "桌面端主页",
+	desktopHomepageDesc: "桌面端启动时自动打开这篇笔记；留空则关闭。",
+	mobileHomepage: "移动端主页",
+	mobileHomepageDesc: "手机或平板启动时自动打开这篇笔记；留空则关闭。",
+	chooseHomepage: "选择 Markdown 笔记",
+	openHomepageNow: "立即打开"
 };
 
 export function getTranslations(): Translations {

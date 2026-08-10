@@ -3,6 +3,7 @@ import { getTranslations } from "./i18n";
 import { registerCopyInlineCode } from "./copy-inline-code";
 import { NoteUpdatedPropertyManager } from "./note-updated-property";
 import { UpdatedPropertyReadonlyManager } from "./updated-property-readonly";
+import { StartupHomepageManager } from "./startup-homepage";
 import {
 	DEFAULT_SETTINGS,
 	type DeviceKind,
@@ -19,6 +20,7 @@ export default class ViewModeLockPlugin extends Plugin {
 	settings: ViewModeLockSettings = DEFAULT_SETTINGS;
 	readonly noteUpdatedProperty = new NoteUpdatedPropertyManager(this);
 	readonly updatedPropertyReadonly = new UpdatedPropertyReadonlyManager(this);
+	readonly startupHomepage = new StartupHomepageManager(this);
 	private enforceQueued = false;
 	private readonly metadataSuggestions = new Map<string, CachedMetadata>();
 	private suggestionIndexReady = false;
@@ -29,6 +31,7 @@ export default class ViewModeLockPlugin extends Plugin {
 		registerCopyInlineCode(this);
 		this.noteUpdatedProperty.register();
 		this.updatedPropertyReadonly.register();
+		this.startupHomepage.register();
 		const translations = getTranslations();
 
 		this.addCommand({
@@ -71,6 +74,10 @@ export default class ViewModeLockPlugin extends Plugin {
 			devicePolicies: {
 				desktop: this.normalizeDevicePolicy(stored?.devicePolicies?.desktop),
 				mobile: this.normalizeDevicePolicy(stored?.devicePolicies?.mobile)
+			},
+			startupHomepagePaths: {
+				desktop: stored?.startupHomepagePaths?.desktop?.trim() ?? "",
+				mobile: stored?.startupHomepagePaths?.mobile?.trim() ?? ""
 			},
 			overrideProperty: !stored?.overrideProperty?.trim() || stored.overrideProperty.trim() === "阅读模式锁定"
 				? DEFAULT_SETTINGS.overrideProperty
@@ -209,6 +216,7 @@ export default class ViewModeLockPlugin extends Plugin {
 
 	getSuggestionCatalog(): {
 		folders: string[];
+		markdownFiles: string[];
 		tags: string[];
 		properties: string[];
 		propertyValues: Map<string, string[]>;
@@ -253,6 +261,7 @@ export default class ViewModeLockPlugin extends Plugin {
 
 		return {
 			folders: this.app.vault.getAllFolders().map((folder) => folder.path).filter(Boolean).sort(),
+			markdownFiles: this.app.vault.getMarkdownFiles().map((file) => file.path).sort(),
 			tags: [...tags].sort(),
 			properties: [...properties].sort(),
 			propertyValues: new Map([...propertyValues].map(([key, values]) => [key, [...values].sort()]))
