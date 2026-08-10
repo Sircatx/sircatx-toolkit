@@ -12,6 +12,7 @@ A modular toolkit that combines small, independently configurable note enhanceme
 - Opens the configured note once after the workspace is ready.
 - Clicking the input opens a searchable note picker. A My homepage ribbon action is available on desktop and in the mobile shortcuts menu.
 - Leaving a device path empty disables the feature on that device.
+- Exposes offline filename search keys for Chinese full-pinyin and pinyin-initial matching, powered by `pinyin-pro`. Note contents are never scanned.
 
 ### Inline code copy
 
@@ -75,7 +76,7 @@ npm run lint
 
 ## License
 
-MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode Lock and retains the original license attribution.
+MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode Lock and retains the original license attribution. Third-party dependency notices are listed in `THIRD_PARTY_NOTICES.md`.
 
 ## 简体中文
 
@@ -84,6 +85,7 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 ### 功能
 
 - 分别设置桌面端和移动端的启动主页，打开应用后自动进入指定笔记。
+- 使用 `pinyin-pro` 在本地生成中文全拼和拼音首字母搜索键，支持移动端和离线使用；只转换文件名，不扫描笔记正文。
 - 在阅读视图和实时预览的行内代码后显示 📋，点击即可复制，代码块不受影响。
 - 分别设置桌面端和移动端的阅读模式锁定行为。
 - 按文件夹、标签或属性值建立锁定规则。

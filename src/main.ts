@@ -1,4 +1,5 @@
 import { getAllTags, MarkdownView, Notice, Platform, Plugin, TFile, type CachedMetadata } from "obsidian";
+import { pinyin } from "pinyin-pro";
 import { getTranslations } from "./i18n";
 import { registerCopyInlineCode } from "./copy-inline-code";
 import { NoteUpdatedPropertyManager } from "./note-updated-property";
@@ -95,6 +96,18 @@ export default class ViewModeLockPlugin extends Plugin {
 
 	async saveSettings(): Promise<void> {
 		await this.saveData(this.settings);
+	}
+
+	getPinyinSearchKeys(text: string): { fullPinyin: string; initials: string } {
+		const syllables = pinyin(text, {
+			toneType: "none",
+			type: "array"
+		});
+
+		return {
+			fullPinyin: syllables.join("").toLowerCase(),
+			initials: syllables.map((item) => item[0] ?? "").join("").toLowerCase()
+		};
 	}
 
 	async enforceActiveView(): Promise<void> {
