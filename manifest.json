@@ -1,9 +1,9 @@
 {
   "id": "sircatx-toolkit",
   "name": "Sircatx Toolkit",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "minAppVersion": "1.13.0",
-  "description": "A modular Obsidian toolkit for startup homepages, quick search, inline code copying, updated-time properties, and reading mode locks.",
+  "description": "A modular Obsidian toolkit for startup and quick pages, quick search, inline code copying, updated-time properties, and reading mode locks.",
   "author": "Sircatx",
   "isDesktopOnly": false
 }

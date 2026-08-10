@@ -6,6 +6,7 @@ import { NoteUpdatedPropertyManager } from "./note-updated-property";
 import { UpdatedPropertyReadonlyManager } from "./updated-property-readonly";
 import { StartupHomepageManager } from "./startup-homepage";
 import { QuickSearchManager } from "./quick-search";
+import { QuickPagesManager } from "./quick-pages";
 import {
 	DEFAULT_SETTINGS,
 	type DeviceKind,
@@ -24,6 +25,7 @@ export default class ViewModeLockPlugin extends Plugin {
 	readonly updatedPropertyReadonly = new UpdatedPropertyReadonlyManager(this);
 	readonly startupHomepage = new StartupHomepageManager(this);
 	readonly quickSearch = new QuickSearchManager(this);
+	readonly quickPages = new QuickPagesManager(this);
 	private enforceQueued = false;
 	private readonly metadataSuggestions = new Map<string, CachedMetadata>();
 	private suggestionIndexReady = false;
@@ -36,6 +38,7 @@ export default class ViewModeLockPlugin extends Plugin {
 		this.updatedPropertyReadonly.register();
 		this.startupHomepage.register();
 		this.quickSearch.register();
+		this.quickPages.register();
 		const translations = getTranslations();
 		this.addRibbonIcon("home", translations.myHomepage, () => void this.startupHomepage.openCurrent());
 		this.addRibbonIcon("search", translations.quickSearch, () => this.quickSearch.open());
@@ -90,6 +93,13 @@ export default class ViewModeLockPlugin extends Plugin {
 				desktop: stored?.startupHomepagePaths?.desktop?.trim() ?? "",
 				mobile: stored?.startupHomepagePaths?.mobile?.trim() ?? ""
 			},
+			quickPages: Array.isArray(stored?.quickPages)
+				? stored.quickPages.filter((page) => page
+					&& typeof page.id === "string"
+					&& typeof page.path === "string"
+					&& (page.device === "desktop" || page.device === "mobile"))
+					.map((page) => ({ ...page, path: page.path.trim() }))
+				: [],
 			overrideProperty: !stored?.overrideProperty?.trim() || stored.overrideProperty.trim() === "阅读模式锁定"
 				? DEFAULT_SETTINGS.overrideProperty
 				: stored.overrideProperty.trim(),

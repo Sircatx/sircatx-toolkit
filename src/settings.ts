@@ -30,6 +30,8 @@ export interface ViewModeLockSettings {
 	noteUpdatedPropertyReadonly: boolean;
 	/** Startup note selected independently for desktop and mobile. */
 	startupHomepagePaths: Record<DeviceKind, string>;
+	/** Notes exposed as device-specific ribbon shortcuts. */
+	quickPages: QuickPage[];
 	/** Searches note titles and cached properties without reading note bodies. */
 	quickSearchEnabled: boolean;
 	/** Redirects the mobile navbar search action to Quick search. */
@@ -40,6 +42,12 @@ export type LockRuleKind = "folder" | "tag" | "property";
 export type ViewModeLockMode = "reading" | "live-preview" | "source";
 export type DeviceKind = "desktop" | "mobile";
 export type DevicePolicy = "follow-rules" | "force-reading" | "disable-lock";
+
+export interface QuickPage {
+	id: string;
+	path: string;
+	device: DeviceKind;
+}
 
 export interface LockRule {
 	id: string;
@@ -76,6 +84,7 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 		desktop: "",
 		mobile: ""
 	},
+	quickPages: [],
 	quickSearchEnabled: true,
 	quickSearchReplaceMobileNavbar: false
 };
@@ -197,7 +206,8 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 				type: "group",
 				heading: translations.startupHomepageHeading,
 				cls: "sircatx-toolkit-module-group",
-				items: (["desktop", "mobile"] as const).map((device): SettingDefinition => ({
+				items: [
+				...(["desktop", "mobile"] as const).map((device): SettingDefinition => ({
 					name: translations[`${device}Homepage`],
 					desc: translations[`${device}HomepageDesc`],
 					render: (setting) => {
@@ -222,7 +232,61 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 							.setTooltip(translations.openHomepageNow)
 							.onClick(() => void this.plugin.startupHomepage.open(device)));
 					}
-				}))
+				})),
+				{
+					name: translations.quickPagesHeading,
+					desc: translations.quickPagesDesc,
+					render: (setting) => {
+						setting.setHeading();
+					}
+				},
+				...this.plugin.settings.quickPages.map((page, index): SettingDefinition => ({
+					name: page.path
+						? page.path.replace(/\.md$/i, "").split("/").pop() ?? translations.quickPage(index + 1)
+						: translations.quickPage(index + 1),
+					desc: page.path || translations.chooseQuickPage,
+					render: (setting) => {
+						setting.settingEl.addClass("view-mode-lock-rule-card");
+						setting.addDropdown((dropdown) => dropdown
+							.addOption("desktop", translations.desktop)
+							.addOption("mobile", translations.mobile)
+							.setValue(page.device)
+							.onChange(async (value) => {
+								page.device = value as DeviceKind;
+								await this.plugin.saveSettings();
+								this.plugin.quickPages.refresh();
+							}));
+						setting.addText((input) => {
+							input.setPlaceholder(translations.chooseQuickPage).setValue(page.path);
+							input.inputEl.readOnly = true;
+							input.inputEl.addEventListener("click", () => {
+								new HomepageNoteModal(this.app, (file) => {
+									page.path = file.path;
+									input.setValue(file.path);
+									void this.plugin.saveSettings().then(() => {
+										this.plugin.quickPages.refresh();
+										this.refreshSettings();
+									});
+								}).open();
+							});
+						});
+						setting.addExtraButton((button) => button
+							.setIcon("trash-2")
+							.setTooltip(translations.deleteQuickPage)
+							.onClick(() => void this.deleteQuickPage(index)));
+					}
+				})),
+				{
+					name: translations.addQuickPageDesc,
+					searchable: false,
+					render: (setting) => {
+						setting.addExtraButton((button) => button
+							.setIcon("plus")
+							.setTooltip(translations.addQuickPage)
+							.onClick(() => void this.addQuickPage()));
+					}
+				}
+				]
 			},
 			{
 				type: "group",
@@ -469,6 +533,23 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 			mode: "reading"
 		});
 		await this.saveRules();
+		this.refreshSettings();
+	}
+
+	private async addQuickPage(): Promise<void> {
+		this.plugin.settings.quickPages.push({
+			id: crypto.randomUUID(),
+			path: "",
+			device: "mobile"
+		});
+		await this.plugin.saveSettings();
+		this.refreshSettings();
+	}
+
+	private async deleteQuickPage(index: number): Promise<void> {
+		this.plugin.settings.quickPages.splice(index, 1);
+		await this.plugin.saveSettings();
+		this.plugin.quickPages.refresh();
 		this.refreshSettings();
 	}
 

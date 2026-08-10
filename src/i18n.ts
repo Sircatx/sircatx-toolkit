@@ -61,6 +61,13 @@ export interface Translations {
 	chooseHomepage: string;
 	openHomepageNow: string;
 	myHomepage: string;
+	quickPagesHeading: string;
+	quickPagesDesc: string;
+	quickPage: (number: number) => string;
+	chooseQuickPage: string;
+	addQuickPageDesc: string;
+	addQuickPage: string;
+	deleteQuickPage: string;
 	quickSearchHeading: string;
 	quickSearchEnabled: string;
 	quickSearchEnabledDesc: string;
@@ -132,6 +139,13 @@ const EN: Translations = {
 	chooseHomepage: "Click to choose a homepage note",
 	openHomepageNow: "Open now",
 	myHomepage: "My homepage",
+	quickPagesHeading: "Quick pages",
+	quickPagesDesc: "Add note shortcuts for desktop or mobile. Matching notes appear in that device's ribbon area.",
+	quickPage: (number) => `Quick page ${number}`,
+	chooseQuickPage: "Click to choose a note",
+	addQuickPageDesc: "Add a desktop or mobile quick page.",
+	addQuickPage: "Add quick page",
+	deleteQuickPage: "Delete quick page",
 	quickSearchHeading: "Quick search",
 	quickSearchEnabled: "Enable quick search",
 	quickSearchEnabledDesc: "Search note titles and cached properties without reading note bodies. Titles and aliases support full pinyin and initials.",
@@ -203,6 +217,13 @@ const KO: Translations = {
 	chooseHomepage: "클릭하여 홈페이지 노트 선택",
 	openHomepageNow: "지금 열기",
 	myHomepage: "내 홈페이지",
+	quickPagesHeading: "빠른 페이지",
+	quickPagesDesc: "데스크톱 또는 모바일용 노트 바로가기를 추가합니다. 해당 기기의 기능 영역에 표시됩니다.",
+	quickPage: (number) => `빠른 페이지 ${number}`,
+	chooseQuickPage: "클릭하여 노트 선택",
+	addQuickPageDesc: "데스크톱 또는 모바일 빠른 페이지를 추가합니다.",
+	addQuickPage: "빠른 페이지 추가",
+	deleteQuickPage: "빠른 페이지 삭제",
 	quickSearchHeading: "빠른 검색",
 	quickSearchEnabled: "빠른 검색 사용",
 	quickSearchEnabledDesc: "노트 본문을 읽지 않고 제목과 캐시된 속성을 검색합니다. 제목과 별칭은 전체 병음과 첫 글자를 지원합니다.",
@@ -274,6 +295,13 @@ const ZH_CN: Translations = {
 	chooseHomepage: "点击选择主页笔记",
 	openHomepageNow: "立即打开",
 	myHomepage: "我的主页",
+	quickPagesHeading: "快捷页面",
+	quickPagesDesc: "添加桌面端或移动端的笔记快捷入口；笔记会显示在对应设备的功能区域。",
+	quickPage: (number) => `快捷页面 ${number}`,
+	chooseQuickPage: "点击选择笔记",
+	addQuickPageDesc: "添加桌面端或移动端快捷页面。",
+	addQuickPage: "添加快捷页面",
+	deleteQuickPage: "删除快捷页面",
 	quickSearchHeading: "快捷搜索",
 	quickSearchEnabled: "启用快捷搜索",
 	quickSearchEnabledDesc: "只搜索笔记标题和已缓存的笔记属性，不读取正文；标题和别名支持全拼与拼音首字母。",

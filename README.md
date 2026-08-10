@@ -2,7 +2,7 @@
 
 English | [简体中文](#简体中文)
 
-A modular Obsidian toolkit for startup homepages, quick search, inline code copying, updated-time properties, and reading mode locks. Every feature is independently configurable on desktop and mobile where applicable.
+A modular Obsidian toolkit for startup and quick pages, quick search, inline code copying, updated-time properties, and reading mode locks. Every feature is independently configurable on desktop and mobile where applicable.
 
 ## Features
 
@@ -12,6 +12,8 @@ A modular Obsidian toolkit for startup homepages, quick search, inline code copy
 - Opens the configured note once after the workspace is ready.
 - Clicking the input opens a searchable note picker. A My homepage ribbon action is available on desktop and in the mobile shortcuts menu.
 - Leaving a device path empty disables the feature on that device.
+- Adds any number of device-specific Quick pages. Each configured note appears as its own ribbon shortcut on desktop or in the mobile function area.
+- My homepage continues to open the configured startup homepage directly.
 - Exposes offline filename search keys for Chinese full-pinyin and pinyin-initial matching, powered by `pinyin-pro`. Note contents are never scanned.
 
 ### Quick search
@@ -88,11 +90,12 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 
 ## 简体中文
 
-一款模块化的 Obsidian 增强工具箱，提供启动主页、快捷搜索、行内代码复制、笔记更新时间维护和阅读模式锁定。各项功能可独立配置，并在适用时支持桌面端和移动端。
+一款模块化的 Obsidian 增强工具箱，提供启动主页与快捷页面、快捷搜索、行内代码复制、笔记更新时间维护和阅读模式锁定。各项功能可独立配置，并在适用时支持桌面端和移动端。
 
 ### 功能
 
 - 分别设置桌面端和移动端的启动主页，打开应用后自动进入指定笔记。
+- 可添加任意数量的桌面端或移动端快捷页面，每篇笔记会显示为对应设备功能区的独立快捷按钮；“我的主页”仍直接打开启动主页。
 - 使用 `pinyin-pro` 在本地生成中文全拼和拼音首字母搜索键，支持移动端和离线使用；只转换文件名，不扫描笔记正文。
 - 新增“快捷搜索”模块：全库搜索笔记标题和 Obsidian 已缓存的笔记属性，不读取正文。
 - 标题和别名支持中文、模糊匹配、全拼和拼音首字母；可从命令面板或搜索快捷按钮打开。
