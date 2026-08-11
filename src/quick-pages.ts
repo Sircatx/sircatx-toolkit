@@ -12,6 +12,7 @@ export class QuickPagesManager {
 	}
 
 	refresh(): void {
+		const hadRegisteredEntries = this.commandIds.size > 0 || this.ribbonElements.size > 0;
 		for (const commandId of this.commandIds) this.plugin.removeCommand(commandId);
 		for (const ribbonElement of this.ribbonElements) ribbonElement.remove();
 		this.commandIds.clear();
@@ -25,13 +26,21 @@ export class QuickPagesManager {
 			this.plugin.addCommand({
 				id: commandId,
 				name: `打开快捷页面：${label}`,
-				callback: () => void this.open(page.path)
+				callback: () => void this.openConfigured(page.id)
 			});
 			this.commandIds.add(commandId);
 
-			const ribbonElement = this.plugin.addRibbonIcon("file-text", label, () => void this.open(page.path));
+			const ribbonElement = this.plugin.addRibbonIcon("file-text", label, () => void this.openConfigured(page.id));
 			this.ribbonElements.add(ribbonElement);
 		}
+
+		if (hadRegisteredEntries) this.plugin.app.workspace.trigger("layout-change");
+	}
+
+	private async openConfigured(id: string): Promise<void> {
+		const page = this.plugin.settings.quickPages.find((candidate) => candidate.id === id);
+		if (!page?.path.trim()) return;
+		await this.open(page.path);
 	}
 
 	private async open(path: string): Promise<void> {
