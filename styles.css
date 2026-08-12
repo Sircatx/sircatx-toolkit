@@ -2,6 +2,18 @@
 	width: min(260px, 100%);
 }
 
+.sircatx-toolkit-device-code {
+	font-size: 1.8em;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	user-select: all;
+}
+
+.sircatx-toolkit-todo-status {
+	margin-top: 0.75em;
+	color: var(--text-muted);
+}
+
 .sircatx-toolkit-module-group {
 	margin-bottom: 26px;
 }

@@ -24,6 +24,20 @@ A modular Obsidian toolkit for startup and quick pages, quick search, inline cod
 - An optional, disabled-by-default setting redirects the mobile bottom search button to Quick search; turning it off restores Obsidian's native full-text search.
 - Ignores Obsidian's internal `position` metadata and limits each indexed property value to 200 characters.
 
+### Microsoft To Do sync
+
+- Bidirectionally syncs task completion, titles, and newly added Markdown tasks.
+- Uses Microsoft device-code login and the delegated `Tasks.ReadWrite` permission.
+- The shared public-client application is built in; users only need to click Login and authorize their Microsoft account.
+- Completed tasks are hidden by default and can be shown again from the plugin settings.
+- Deleting a Markdown task does not delete its Microsoft To Do counterpart.
+- The Azure free-account 30-day credit period does not require a plugin or client-ID update. The integration uses no paid Azure resources and has no client secret to renew.
+- Access tokens are refreshed automatically. If Microsoft revokes the authorization or the refresh token is inactive for about 90 days, click Login again.
+
+To start syncing, open **Settings → Sircatx Toolkit**, enable Microsoft To Do sync, and click **Login**. The plugin writes the synchronized lists to `Microsoft To Do/Microsoft To Do.md` by default. The file name provides the page title, so the generated Markdown does not repeat it as a heading.
+
+Embed all synchronized tasks in another note with `![[Microsoft To Do/Microsoft To Do]]`. To embed only one To Do list, use its generated heading, for example `![[Microsoft To Do/Microsoft To Do#Tasks]]`.
+
 ### Inline code copy
 
 - Shows a 📋 icon after inline code in Reading view and Live Preview.
@@ -108,5 +122,11 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 - 停止编辑 30 秒后，自动维护当前笔记的 `更新时间` 属性，格式为 `YYYY-MM-DD HH:mm`。
 - 新建 Markdown 笔记时自动添加该属性，可在设置中关闭。
 - 可禁止在笔记属性界面中手动修改更新时间；源码模式仍可编辑 YAML。
+- 可双向同步 Microsoft To Do：支持完成状态、标题和新增任务；删除 Markdown 行不会删除云端任务。公共客户端应用已内置，用户只需点击登录并授权 Microsoft 账户。
+- 默认不显示已完成任务；如有需要，可在插件设置中重新开启。
+- Azure 免费账户的 30 天额度到期后不需要更新插件或客户端 ID；该功能不使用付费 Azure 资源，也没有需要续期的客户端密钥。
+- 访问令牌由插件自动刷新。若微软撤销授权，或刷新令牌约 90 天未使用而失效，只需在设置中重新点击“登录”。
 
-安装后打开 **设置 → Sircatx Toolkit** 进行配置。请勿同时启用功能重复的独立插件。
+安装后打开 **设置 → Sircatx Toolkit** 进行配置。开启 Microsoft To Do 同步并点击“登录”即可开始使用，默认同步文件为 `Microsoft To Do/Microsoft To Do.md`。文件名已作为页面标题，正文不会再重复生成同名标题。请勿同时启用功能重复的独立插件。
+
+若要在其他笔记嵌入全部同步任务，输入 `![[Microsoft To Do/Microsoft To Do]]`；只嵌入某个清单时，加上对应的二级标题，例如 `![[Microsoft To Do/Microsoft To Do#任务]]`。

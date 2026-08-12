@@ -7,6 +7,7 @@ import { UpdatedPropertyReadonlyManager } from "./updated-property-readonly";
 import { StartupHomepageManager } from "./startup-homepage";
 import { QuickSearchManager } from "./quick-search";
 import { QuickPagesManager } from "./quick-pages";
+import { MicrosoftTodoSyncManager } from "./microsoft-todo-sync";
 import {
 	DEFAULT_SETTINGS,
 	type DeviceKind,
@@ -26,6 +27,7 @@ export default class ViewModeLockPlugin extends Plugin {
 	readonly startupHomepage = new StartupHomepageManager(this);
 	readonly quickSearch = new QuickSearchManager(this);
 	readonly quickPages = new QuickPagesManager(this);
+	readonly microsoftTodoSync = new MicrosoftTodoSyncManager(this);
 	private enforceQueued = false;
 	private readonly metadataSuggestions = new Map<string, CachedMetadata>();
 	private suggestionIndexReady = false;
@@ -39,6 +41,7 @@ export default class ViewModeLockPlugin extends Plugin {
 		this.startupHomepage.register();
 		this.quickSearch.register();
 		this.quickPages.register();
+		this.microsoftTodoSync.register();
 		const translations = getTranslations();
 		this.addRibbonIcon("home", translations.myHomepage, () => void this.startupHomepage.openCurrent());
 		this.addRibbonIcon("search", translations.quickSearch, () => this.quickSearch.open());
@@ -85,6 +88,13 @@ export default class ViewModeLockPlugin extends Plugin {
 		this.settings = {
 			...DEFAULT_SETTINGS,
 			...stored,
+			microsoftTodoClientId: stored?.microsoftTodoClientId?.trim()
+				|| DEFAULT_SETTINGS.microsoftTodoClientId,
+			microsoftTodoTenant: stored?.microsoftTodoTenant?.trim() || "common",
+			microsoftTodoOutputPath: !stored?.microsoftTodoOutputPath?.trim()
+				|| stored.microsoftTodoOutputPath.trim() === "Microsoft To Do.md"
+				? DEFAULT_SETTINGS.microsoftTodoOutputPath
+				: stored.microsoftTodoOutputPath.trim(),
 			devicePolicies: {
 				desktop: this.normalizeDevicePolicy(stored?.devicePolicies?.desktop),
 				mobile: this.normalizeDevicePolicy(stored?.devicePolicies?.mobile)
@@ -100,6 +110,10 @@ export default class ViewModeLockPlugin extends Plugin {
 					&& (page.device === undefined || page.device === "mobile"))
 					.map((page) => ({ id: page.id, path: page.path.trim() }))
 				: [],
+			microsoftTodoSnapshot: stored?.microsoftTodoSnapshot
+				&& typeof stored.microsoftTodoSnapshot === "object"
+				? stored.microsoftTodoSnapshot
+				: {},
 			overrideProperty: !stored?.overrideProperty?.trim() || stored.overrideProperty.trim() === "阅读模式锁定"
 				? DEFAULT_SETTINGS.overrideProperty
 				: stored.overrideProperty.trim(),
@@ -115,6 +129,10 @@ export default class ViewModeLockPlugin extends Plugin {
 
 	async saveSettings(): Promise<void> {
 		await this.saveData(this.settings);
+	}
+
+	onunload(): void {
+		this.microsoftTodoSync.unregister();
 	}
 
 	getPinyinSearchKeys(text: string): { fullPinyin: string; initials: string } {

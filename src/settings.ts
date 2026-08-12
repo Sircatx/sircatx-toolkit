@@ -36,6 +36,24 @@ export interface ViewModeLockSettings {
 	quickSearchEnabled: boolean;
 	/** Redirects the mobile navbar search action to Quick search. */
 	quickSearchReplaceMobileNavbar: boolean;
+	/** Enables bidirectional synchronization with Microsoft To Do. */
+	microsoftTodoEnabled: boolean;
+	microsoftTodoClientId: string;
+	microsoftTodoTenant: string;
+	microsoftTodoOutputPath: string;
+	microsoftTodoSyncIntervalMinutes: number;
+	microsoftTodoIncludeCompleted: boolean;
+	microsoftTodoRefreshToken: string;
+	microsoftTodoAccessToken: string;
+	microsoftTodoAccessTokenExpiresAt: number;
+	microsoftTodoLastSyncAt: number;
+	microsoftTodoSnapshot: Record<string, MicrosoftTodoSnapshot>;
+}
+
+export interface MicrosoftTodoSnapshot {
+	listId: string;
+	title: string;
+	status: string;
 }
 
 export type LockRuleKind = "folder" | "tag" | "property";
@@ -87,7 +105,18 @@ export const DEFAULT_SETTINGS: ViewModeLockSettings = {
 	},
 	quickPages: [],
 	quickSearchEnabled: true,
-	quickSearchReplaceMobileNavbar: false
+	quickSearchReplaceMobileNavbar: false,
+	microsoftTodoEnabled: false,
+	microsoftTodoClientId: "595668c0-ff94-4974-a0ea-a43c377cf347",
+	microsoftTodoTenant: "common",
+	microsoftTodoOutputPath: "Microsoft To Do/Microsoft To Do.md",
+	microsoftTodoSyncIntervalMinutes: 15,
+	microsoftTodoIncludeCompleted: false,
+	microsoftTodoRefreshToken: "",
+	microsoftTodoAccessToken: "",
+	microsoftTodoAccessTokenExpiresAt: 0,
+	microsoftTodoLastSyncAt: 0,
+	microsoftTodoSnapshot: {}
 };
 
 class ValueSuggest extends AbstractInputSuggest<string> {
@@ -174,6 +203,86 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 		];
 
 		return [
+			{
+				type: "group",
+				heading: "Microsoft To Do 同步",
+				cls: "sircatx-toolkit-module-group",
+				items: [{
+					name: "启用 Microsoft To Do 同步",
+					desc: "同步任务状态、标题和新增任务；从 Markdown 删除任务不会删除云端任务。",
+					render: (setting) => setting.addToggle((toggle) => toggle
+						.setValue(this.plugin.settings.microsoftTodoEnabled)
+						.onChange(async (value) => {
+							this.plugin.settings.microsoftTodoEnabled = value;
+							await this.plugin.saveSettings();
+							this.plugin.microsoftTodoSync.refresh();
+							if (value) void this.plugin.microsoftTodoSync.syncNow(true);
+							this.refreshSettings();
+						}))
+				}, {
+					name: "输出文件",
+					desc: "相对于当前仓库的 Markdown 文件路径；同步时会整体重写。",
+					render: (setting) => setting.addText((text) => text
+						.setValue(this.plugin.settings.microsoftTodoOutputPath)
+						.setDisabled(!this.plugin.settings.microsoftTodoEnabled)
+						.onChange(async (value) => {
+							this.plugin.settings.microsoftTodoOutputPath = value;
+							await this.plugin.saveSettings();
+						}))
+				}, {
+					name: "同步间隔（分钟）",
+					desc: "最小 1 分钟，修改后立即生效。",
+					render: (setting) => setting.addText((text) => text
+						.setValue(String(this.plugin.settings.microsoftTodoSyncIntervalMinutes))
+						.setDisabled(!this.plugin.settings.microsoftTodoEnabled)
+						.onChange(async (value) => {
+							const parsed = Number.parseInt(value, 10);
+							if (!Number.isFinite(parsed)) return;
+							this.plugin.settings.microsoftTodoSyncIntervalMinutes = Math.max(1, parsed);
+							await this.plugin.saveSettings();
+							this.plugin.microsoftTodoSync.refresh();
+						}))
+				}, {
+					name: "显示已完成任务",
+					desc: "默认关闭；开启后会同时显示 Microsoft To Do 中已完成的任务。",
+					render: (setting) => setting.addToggle((toggle) => toggle
+						.setValue(this.plugin.settings.microsoftTodoIncludeCompleted)
+						.setDisabled(!this.plugin.settings.microsoftTodoEnabled)
+						.onChange(async (value) => {
+							this.plugin.settings.microsoftTodoIncludeCompleted = value;
+							await this.plugin.saveSettings();
+							if (this.plugin.microsoftTodoSync.isConnected()) {
+								await this.plugin.microsoftTodoSync.syncNow(true);
+							}
+						}))
+				}, {
+					name: this.plugin.microsoftTodoSync.isConnected() ? "Microsoft 账户已连接" : "连接 Microsoft 账户",
+					desc: this.plugin.settings.microsoftTodoLastSyncAt
+						? `上次成功同步：${new Date(this.plugin.settings.microsoftTodoLastSyncAt).toLocaleString()}`
+						: "点击登录并按提示授权即可；令牌保存在本机插件数据中。",
+					render: (setting) => {
+						setting.addButton((button) => button
+							.setButtonText(this.plugin.microsoftTodoSync.isConnected() ? "重新登录" : "登录")
+							.setDisabled(!this.plugin.settings.microsoftTodoEnabled)
+							.setCta()
+							.onClick(() => void this.plugin.microsoftTodoSync.signIn()));
+						setting.addButton((button) => button
+							.setButtonText("退出")
+							.setDisabled(!this.plugin.microsoftTodoSync.isConnected())
+							.onClick(async () => {
+								await this.plugin.microsoftTodoSync.signOut();
+								this.refreshSettings();
+							}));
+					}
+				}, {
+					name: "立即同步",
+					desc: "先回写 Obsidian 中的修改，再读取 Microsoft To Do 的当前状态。",
+					render: (setting) => setting.addButton((button) => button
+						.setButtonText("同步")
+						.setDisabled(!this.plugin.settings.microsoftTodoEnabled || !this.plugin.microsoftTodoSync.isConnected())
+						.onClick(() => void this.plugin.microsoftTodoSync.syncNow()))
+				}]
+			},
 			{
 				type: "group",
 				heading: translations.quickSearchHeading,
