@@ -36,6 +36,8 @@ A modular Obsidian toolkit for startup and quick pages, quick search, inline cod
 
 To start syncing, open **Settings → Sircatx Toolkit**, enable Microsoft To Do sync, and click **Login**. The plugin writes the synchronized lists to `Microsoft To Do/Microsoft To Do.md` by default. The file name provides the page title, so the generated Markdown does not repeat it as a heading.
 
+The output path can be typed manually or selected from existing Markdown notes with the note button in settings. The selected note is completely rewritten during synchronization.
+
 Embed all synchronized tasks in another note with `![[Microsoft To Do/Microsoft To Do]]`. To embed only one To Do list, use its generated heading, for example `![[Microsoft To Do/Microsoft To Do#Tasks]]`.
 
 ### Inline code copy
@@ -128,5 +130,7 @@ MIT. The reading-mode lock implementation is derived from GOODJINC's View Mode L
 - 访问令牌由插件自动刷新。若微软撤销授权，或刷新令牌约 90 天未使用而失效，只需在设置中重新点击“登录”。
 
 安装后打开 **设置 → Sircatx Toolkit** 进行配置。开启 Microsoft To Do 同步并点击“登录”即可开始使用，默认同步文件为 `Microsoft To Do/Microsoft To Do.md`。文件名已作为页面标题，正文不会再重复生成同名标题。请勿同时启用功能重复的独立插件。
+
+同步路径既可以手动输入，也可以点击设置项右侧的笔记按钮，从仓库内已有 Markdown 笔记中选择。同步会整体重写所选笔记，请勿选择包含其它重要内容的笔记。
 
 若要在其他笔记嵌入全部同步任务，输入 `![[Microsoft To Do/Microsoft To Do]]`；只嵌入某个清单时，加上对应的二级标题，例如 `![[Microsoft To Do/Microsoft To Do#任务]]`。

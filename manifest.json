@@ -1,7 +1,7 @@
 {
   "id": "sircatx-toolkit",
   "name": "Sircatx Toolkit",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "minAppVersion": "1.13.0",
   "description": "A modular Obsidian toolkit with Microsoft To Do sync, quick search, homepages, inline code copying, timestamps, and reading mode locks.",
   "author": "Sircatx",

@@ -168,6 +168,26 @@ class HomepageNoteModal extends FuzzySuggestModal<TFile> {
 	}
 }
 
+class OutputNoteModal extends FuzzySuggestModal<TFile> {
+	constructor(app: App, private readonly onChoose: (file: TFile) => void) {
+		super(app);
+		this.inputEl.placeholder = "搜索同步笔记";
+	}
+
+	getItems(): TFile[] {
+		return this.app.vault.getMarkdownFiles()
+			.sort((a, b) => a.path.localeCompare(b.path));
+	}
+
+	getItemText(file: TFile): string {
+		return file.path;
+	}
+
+	onChooseItem(file: TFile): void {
+		this.onChoose(file);
+	}
+}
+
 export class ViewModeLockSettingTab extends PluginSettingTab {
 	constructor(app: App, private readonly plugin: ViewModeLockPlugin) {
 		super(app, plugin);
@@ -221,14 +241,24 @@ export class ViewModeLockSettingTab extends PluginSettingTab {
 						}))
 				}, {
 					name: "输出文件",
-					desc: "相对于当前仓库的 Markdown 文件路径；同步时会整体重写。",
-					render: (setting) => setting.addText((text) => text
-						.setValue(this.plugin.settings.microsoftTodoOutputPath)
-						.setDisabled(!this.plugin.settings.microsoftTodoEnabled)
-						.onChange(async (value) => {
-							this.plugin.settings.microsoftTodoOutputPath = value;
-							await this.plugin.saveSettings();
-						}))
+					desc: "可手动输入路径，或点击笔记按钮选择已有 Markdown 文件。同步会整体重写所选文件。",
+					render: (setting) => {
+						setting.addText((text) => text
+							.setValue(this.plugin.settings.microsoftTodoOutputPath)
+							.setDisabled(!this.plugin.settings.microsoftTodoEnabled)
+							.onChange(async (value) => {
+								this.plugin.settings.microsoftTodoOutputPath = value;
+								await this.plugin.saveSettings();
+							}));
+						setting.addExtraButton((button) => button
+							.setIcon("file-search")
+							.setTooltip("选择同步笔记")
+							.setDisabled(!this.plugin.settings.microsoftTodoEnabled)
+							.onClick(() => new OutputNoteModal(this.app, (file) => {
+								this.plugin.settings.microsoftTodoOutputPath = file.path;
+								void this.plugin.saveSettings().then(() => this.refreshSettings());
+							}).open()));
+				}
 				}, {
 					name: "同步间隔（分钟）",
 					desc: "最小 1 分钟，修改后立即生效。",
